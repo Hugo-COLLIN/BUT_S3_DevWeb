@@ -76,7 +76,6 @@ function add_track (array $plist, array $tr) : array //trans par copie : pl est 
 function add_track_ref (array &$plist, array $tr) : void
 {
     array_push($plist['pistes'], $tr);
-    return;
 }
 /*
 print_r($playlist);
@@ -93,18 +92,13 @@ print_r($playlist);
 //le mieux dans ces cas est de prendre une copie du tableau et de retourner le tableau
 
 //7:
-function display_track_2 (array $tr, int $show = 0) : void
+function display2 (array $pl) : void
 {
-    switch ($show){
-        case 1:
-            print $tr['numéro'] . " " . $tr['titre'] . " " . $tr['artiste'] . " " . $tr['album'] . " " . $tr['durée'];
-            break;
-        case 2:
-            print $tr['numéro'] . " " . $tr['titre'] . " " . $tr['artiste'] . " " . $tr['album'] . " " . $tr['durée'] . " " . $tr['année'];
-            break;
-        default:
-            print $tr['titre'] . " " . $tr['artiste'] . " " . $tr['album'];
-    }
-    print "\n";
-
+    print "playlist : {$pl['nom']} ({$pl['genre']})\npar {$pl['créateur']} le {$pl['date']}\n{$pl['nbpistes']} piste(s) pour une durée de {$pl['durée']}s\n";
+    foreach ($pl['pistes'] as $piste)
+        display_track($piste);
 }
+add_track($playlist, $piste1);
+display2($playlist);
+
+//8:
