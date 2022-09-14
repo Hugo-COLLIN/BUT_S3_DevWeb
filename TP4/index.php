@@ -1,28 +1,30 @@
 <?php
 
-class AlbumTrack0
-{
-    //Attributes
-    public string $titre;
-    public string $artiste;
-    public string $album;
-    public string $annee;
-    public int $numPiste;
-    public string $genre;
-    public int $duree;
-    public string $nomAudio;
+require_once 'AlbumTrack.php';
+require_once 'AlbumTrackRenderer.php';
 
-    //Methods
-    public function __construct(string $t, string $ar, string $al, string $an, int $nP, string $g, int $d, string $nA)
-    {
-        $this->titre = $t;
-        $this->artiste = $ar;
-        $this->album = $al;
-        $this->annee = $an;
-        $this->numPiste = $nP;
-        $this->genre = $g;
-        $this->duree = $d;
-        $this->nomAudio = $nA;
-    }
+$track1 = new AlbumTrack('I\'m with you', 'audio/01-Im_with_you_BB-King-Lucille.mp3');
+$track2 = new AlbumTrack('I_Need_Your_Love', 'audio/02-I_Need_Your_Love-BB_King-Lucille.mp3');
+//$track3 = new AlbumTrack('Country_Girl', 'audio/03-Country_Girl-BB_King-Lucille.mp3');
 
-}
+$track1->album = 'Lucille';
+$track1->artiste = 'B.B. King';
+$track1->numPiste = 1;
+
+$track2->album = 'Lucille';
+$track2->artiste = 'B.B. King';
+$track2->numPiste = 2;
+
+//Affichage
+//print $track1->__toString() . "\n";
+//print $track2 . "\n";
+
+//var_dump($track1);
+
+//print "$track1\n";
+
+
+$r = new AlbumTrackRenderer($track1);
+
+print $r->render(1);
+print $r->render(2);
