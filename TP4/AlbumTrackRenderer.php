@@ -1,15 +1,14 @@
 <?php
-
-class AlbumTrackRenderer
+//Pattern Template de methode (usage fréquent) : Algo d'aff des tracks valide pr tte sorte de track
+class AlbumTrackRenderer extends AudioTrackRenderer
 {
-    private AlbumTrack $track;
-   // private string
-
     public function __construct(AlbumTrack $aT)
     {
-        $this->track = $aT;
+        //$this->track = $aT;
+        parent::__construct($aT);
     }
 
+    /*
     private function short(): string
     {
         return "<div class='track'>
@@ -19,8 +18,9 @@ class AlbumTrackRenderer
                  </audio>
                  </div>";
     }
+    */
 
-    private function long(): string
+    protected function long(): string
     {
         return "<div class='track'>
                  <h1>{$this->track->titre}</h1>
@@ -30,8 +30,8 @@ class AlbumTrackRenderer
                  </audio>
                  </div>";
     }
-
-    function render(int $selector):string
+/*
+    function render(int $selector) : string
     {
         $html = "";
         switch ($selector)
@@ -48,4 +48,5 @@ class AlbumTrackRenderer
         }
         return $html;
     }
+*/
 }
