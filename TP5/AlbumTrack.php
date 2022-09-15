@@ -3,8 +3,8 @@
 class AlbumTrack extends AudioTrack
 {
     //Attributes
-    public string $album;
-    public int $numPiste;
+    protected string $album;
+    protected int $numPiste;
     //public int $annee_parution; //auteur
 
     //Methods

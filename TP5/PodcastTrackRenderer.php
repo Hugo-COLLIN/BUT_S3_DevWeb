@@ -2,8 +2,6 @@
 
 class PodcastTrackRenderer extends AudioTrackRenderer
 {
-
-
     public function __construct(PodcastTrack $aT)
     {
         parent::__construct($aT);
