@@ -1,11 +1,7 @@
 <?php
 
-class AlbumTrack extends AudioTrack
+class PodcastTrack extends AudioTrack
 {
-    //Attributes
-    public string $album;
-    public int $numPiste;
-
     //Methods
     public function __construct(string $t, string $c)
     {
