@@ -1,5 +1,9 @@
 <?php
 
+use exceptions\InvalidPropertyNameException;
+use exceptions\InvalidPropertyValueException;
+use exceptions\NotEditablePropertyException;
+
 require_once 'src/track/Renderer.php';
 require_once 'src/track/AudioTrack.php';
 require_once 'src/track/AlbumTrack.php';
@@ -9,18 +13,30 @@ require_once 'src/track/AudioTrackRenderer.php';
 require_once 'src/track/AlbumTrackRenderer.php';
 require_once 'src/track/PodcastTrackRenderer.php';
 
+require_once 'src/exceptions/InvalidPropertyNameException.php';
+require_once 'src/exceptions/InvalidPropertyValueException.php';
+require_once 'src/exceptions/NotEditablePropertyException.php';
+
 
 $track1 = new AlbumTrack('I\'m with you', 'audio/01-Im_with_you_BB-King-Lucille.mp3');
 $track2 = new AlbumTrack('I_Need_Your_Love', 'audio/02-I_Need_Your_Love-BB_King-Lucille.mp3');
 
+try {
+    $track1->album = 'Lucille';
+    $track1->auteur = 'B.B. King';
+    $track1->numPiste = 1;
+    $track1->propBidon = 56000;
 
-$track1->album = 'Lucille';
-$track1->auteur = 'B.B. King';
-$track1->numPiste = 1;
+    $track2->album = 'Lucille';
+    $track2->auteur = 'B.B. King';
+    $track2->numPiste = 2;
+}
+catch (InvalidPropertyNameException | InvalidPropertyValueException | NotEditablePropertyException $e)
+{
+    print $e->getMessage() ."<br>";
+    print $e->getTraceAsString();
+}
 
-$track2->album = 'Lucille';
-$track2->auteur = 'B.B. King';
-$track2->numPiste = 2;
 
 //Affichage
 //print $track1->__toString() . "\n";
