@@ -6,7 +6,7 @@ class AudioTrack
     protected string $titre;
     protected string $auteur;
     protected int $annee;
-    protected int $genre;
+    protected string $genre;
     protected int $duree = 0;
     protected string $nomAudio;
     protected string $cheminfichier;

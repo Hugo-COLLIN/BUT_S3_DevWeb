@@ -40,8 +40,10 @@ print $r->render(2);
 */
 
 $podcast = new PodcastTrack('Test', 'audio/03-Country_Girl-BB_King-Lucille.mp3');
+$podcast->genre = 'Talk Show';
+$podcast->auteur = 'Bli bla blo';
 print $podcast;
 
 $pR = new PodcastTrackRenderer($podcast);
-print $pR->render(Renderer::COMPACT);
-//print $pR->render(Renderer::LONG);
+//print $pR->render(Renderer::COMPACT);
+print $pR->render(Renderer::LONG);

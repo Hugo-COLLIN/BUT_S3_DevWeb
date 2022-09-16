@@ -6,7 +6,7 @@ class AudioTrack
     public string $titre;
     public string $auteur;
     public int $annee;
-    public int $genre;
+    public string $genre;
     public int $duree = 0;
     public string $nomAudio;
     public string $cheminfichier;
