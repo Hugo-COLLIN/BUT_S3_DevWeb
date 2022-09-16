@@ -3,15 +3,17 @@
 use exceptions\InvalidPropertyNameException;
 use exceptions\InvalidPropertyValueException;
 use exceptions\NotEditablePropertyException;
+//use track\AlbumTrack;
+//use track\PodcastTrack;
 
-require_once 'src/track/Renderer.php';
-require_once 'src/track/AudioTrack.php';
-require_once 'src/track/AlbumTrack.php';
-require_once 'src/track/PodcastTrack.php';
+require_once 'src/Renderer.php';
+require_once 'src/AudioTrack.php';
+require_once 'src/AlbumTrack.php';
+require_once 'src/PodcastTrack.php';
 
-require_once 'src/track/AudioTrackRenderer.php';
-require_once 'src/track/AlbumTrackRenderer.php';
-require_once 'src/track/PodcastTrackRenderer.php';
+require_once 'src/AudioTrackRenderer.php';
+require_once 'src/AlbumTrackRenderer.php';
+require_once 'src/PodcastTrackRenderer.php';
 
 require_once 'src/exceptions/InvalidPropertyNameException.php';
 require_once 'src/exceptions/InvalidPropertyValueException.php';

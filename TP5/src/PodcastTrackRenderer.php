@@ -1,5 +1,6 @@
 <?php
 
+
 class PodcastTrackRenderer extends AudioTrackRenderer
 {
     public function __construct(PodcastTrack $aT)

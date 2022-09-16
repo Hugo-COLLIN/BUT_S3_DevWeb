@@ -1,5 +1,6 @@
 <?php
 
+
 abstract class AudioTrackRenderer implements Renderer
 {
     protected AudioTrack $track;
