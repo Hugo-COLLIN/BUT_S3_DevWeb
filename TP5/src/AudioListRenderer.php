@@ -14,7 +14,7 @@ class AudioListRenderer implements Renderer
     {
         $html = "<div class='trackList'>
                  <h1>{$this->list->nom}</h1>
-                 <p>{$this->list}</p>
+                 <p>{$this->list->tracklist}</p>
                  <p>{$this->list->nbPiste}</p>
                  <p>{$this->list->dureeTot}</p>
                  </div>";

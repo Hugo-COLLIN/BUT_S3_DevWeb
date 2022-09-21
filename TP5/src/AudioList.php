@@ -20,7 +20,7 @@ class AudioList
      */
     public function __get(string $name) : mixed
     {
-        if (! property_exists())
+        if (!property_exists($this, $name))
             throw new \exceptions\InvalidPropertyNameException();
         return $this->$name;
     }
