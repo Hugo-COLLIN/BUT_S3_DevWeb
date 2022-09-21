@@ -1,14 +1,14 @@
 <?php
 
-class Album extends AudioList
+class AlbumList extends AudioList
 {
     protected string $artisteAlbum;
     protected string $dateSortie;
 
-public function __construct(string $nom, array $initialList = [])
-{
-    parent::_construct($nom, $initialList);
-}
+    public function __construct(string $nom, array $initialList = [])
+    {
+        parent::__construct($nom, $initialList);
+    }
 
 
     /**
