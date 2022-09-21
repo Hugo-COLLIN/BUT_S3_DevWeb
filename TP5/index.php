@@ -10,10 +10,14 @@ require_once 'src/Renderer.php';
 require_once 'src/AudioTrack.php';
 require_once 'src/AlbumTrack.php';
 require_once 'src/PodcastTrack.php';
+require_once 'src/AudioList.php';
+require_once 'src/AlbumList.php';
+require_once 'src/PlayList.php';
 
 require_once 'src/AudioTrackRenderer.php';
 require_once 'src/AlbumTrackRenderer.php';
 require_once 'src/PodcastTrackRenderer.php';
+require_once 'src/AudioListRenderer.php';
 
 require_once 'src/exceptions/InvalidPropertyNameException.php';
 require_once 'src/exceptions/InvalidPropertyValueException.php';
@@ -64,3 +68,10 @@ print $podcast;
 $pR = new PodcastTrackRenderer($podcast);
 //print $pR->render(Renderer::COMPACT);
 print $pR->render(Renderer::LONG);
+
+
+
+$plist = new PlayList("Musique", [$track1]);
+
+$pLR = new AudioListRenderer($plist);
+print $pLR->render(1);

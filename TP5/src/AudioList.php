@@ -24,4 +24,9 @@ class AudioList
             throw new \exceptions\InvalidPropertyNameException();
         return $this->$name;
     }
+
+    public function __toString()
+    {
+        return json_encode($this); //JSON_PRETTY_PRINT
+    }
 }
