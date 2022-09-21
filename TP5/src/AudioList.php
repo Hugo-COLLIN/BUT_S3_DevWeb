@@ -2,11 +2,11 @@
 
 class AudioList
 {
-    $nom
-$tracklist = []
-$nbPiste = 0
-$dureetotale = 0
-    public function __construct(string $lName, array $ititialList = [])
+    protected string $nom;
+    protected array $tracklist = [];
+    protected int $nbPiste = 0;
+    protected int $dureeTot = 0;
+    public function __construct(string $lName, array $initialList = [])
     {
         $this->nom = $lName;
         $this->tracklist = $initialList;
@@ -15,6 +15,9 @@ $dureetotale = 0
             $this->dureeTot += $track->duree;
     }
 
+    /**
+     * @throws \exceptions\InvalidPropertyNameException
+     */
     public function __get(string $name) : mixed
     {
         if (! property_exists())

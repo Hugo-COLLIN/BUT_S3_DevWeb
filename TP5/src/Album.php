@@ -2,12 +2,12 @@
 
 class Album extends AudioList
 {
-    $artisteAlbum
-$dateSortie
+    protected string $artisteAlbum;
+    protected string $dateSortie;
 
-public function __construct($nom, $initiallist)
+public function __construct(string $nom, array $initialList = [])
 {
-    parent::_construct($nom, $initialList)
+    parent::_construct($nom, $initialList);
 }
 
 
@@ -15,11 +15,14 @@ public function __construct($nom, $initiallist)
      * @throws \exceptions\InvalidPropertyNameException
      * @throws \exceptions\NotEditablePropertyException
      */
-    public function __set($name, $value)
-{
-    if (!property_exists($this, $attname))
-        throw new \exceptions\InvalidPropertyNameException();
-    if ($name ==='artistealbum' || $name === 'datesortie')
-        throw new \exceptions\NotEditablePropertyException();
-}
+    public function __set(string $name, mixed $value) : void
+    {
+        if (!property_exists($this, $name))
+            throw new \exceptions\InvalidPropertyNameException();
+        if ($name ==='artistealbum' || $name === 'datesortie')
+            $this->$name = $value;
+        else
+            throw new \exceptions\NotEditablePropertyException();
+
+    }
 }
