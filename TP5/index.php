@@ -31,7 +31,7 @@ try {
     $track1->album = 'Lucille';
     $track1->auteur = 'B.B. King';
     $track1->numPiste = 1;
-    $track1->propBidon = 56000;
+    //$track1->propBidon = 56000;
 
     $track2->album = 'Lucille';
     $track2->auteur = 'B.B. King';
@@ -71,7 +71,17 @@ print $pR->render(Renderer::LONG);
 
 
 
-$plist = new PlayList("Musique", [$track1]);
+$plist = new PlayList("Musique", array($track1));
 
 $pLR = new AudioListRenderer($plist);
 print $pLR->render(1);
+
+$plist->addTrack($track2);
+
+$plist2 = new PlayList("Musique");
+$plist2->addTrackList($track1);
+
+print $pLR->render(1);
+
+
+$album = new AlbumList();
