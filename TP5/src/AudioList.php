@@ -6,11 +6,12 @@ class AudioList
     protected array $tracklist = [];
     protected int $nbPiste = 0;
     protected int $dureeTot = 0;
+
     public function __construct(string $lName, array $initialList = [])
     {
         $this->nom = $lName;
         $this->tracklist = $initialList;
-            $this->nbPiste = count($this->tracklist);
+        $this->nbPiste = count($this->tracklist);
         foreach($this->tracklist as $track)
             $this->dureeTot += $track->duree;
     }
@@ -23,10 +24,5 @@ class AudioList
         if (!property_exists($this, $name))
             throw new \exceptions\InvalidPropertyNameException();
         return $this->$name;
-    }
-
-    public function __toString()
-    {
-        return json_encode($this); //JSON_PRETTY_PRINT
     }
 }

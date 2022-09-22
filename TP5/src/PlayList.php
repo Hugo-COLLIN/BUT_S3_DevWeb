@@ -2,11 +2,6 @@
 
 class PlayList extends AudioList
 {
-    public function __construct(string $nom, array $initialList = [])
-    {
-        parent::__construct($nom, $initialList);
-    }
-
     public function addTrack(AudioTrack $track) : void
     {
         array_push($this->tracklist, $track);
@@ -21,10 +16,12 @@ class PlayList extends AudioList
 
     public function addTrackList(array $tracks) : void
     {
-        $this->tracklist = array_merge($this->tracklist, $tracks);
-        $this->nbPiste += sizeof($tracks);
+        $this->tracklist = array_unique(array_merge($this->tracklist, $tracks), SORT_REGULAR);
+        $this->nbPiste = count($this->tracklist); //$this->nbPiste += sizeof($tracks);
 
-        foreach ($tracks as $t)
-            $this->dureeTot += isset($t->duree) ? $t->duree : 0;
+        //foreach ($tracks as $t) $this->dureeTot += isset($t->duree) ? $t->duree : 0;
+        foreach ($this->tracklist as $item)
+            $this->dureeTot += $item->duree;
+
     }
 }

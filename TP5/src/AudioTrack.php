@@ -48,7 +48,7 @@ class AudioTrack
             throw new InvalidPropertyNameException(get_called_class() . " : invalid property $att");
 
         if ($att === 'titre' || $att === 'chemin')
-            throw new NotEditablePropertyException(get_called_class() . " : not-editable property $att");
+            throw new NotEditablePropertyException(get_called_class() . " : non-editable property $att");
 
         if ($att == 'duree' && $value < 0)
             throw new InvalidPropertyValueException(get_called_class() . " : invalid value for property $att");
