@@ -79,9 +79,9 @@ print $pLR->render(1);
 $plist->addTrack($track2);
 
 $plist2 = new PlayList("Musique");
-$plist2->addTrackList($track1);
+$plist2->addTrackList(array($track1));
 
 print $pLR->render(1);
 
 
-$album = new AlbumList();
+//$album = new AlbumList();
