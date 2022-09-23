@@ -10,22 +10,22 @@ use iutnc\deefy\audio\render\Renderer;
 use iutnc\deefy\audio\tracks\AlbumTrack;
 use iutnc\deefy\audio\tracks\PodcastTrack;
 
-require_once 'src/Renderer.php';
-require_once 'src/AudioTrack.php';
-require_once 'src/AlbumTrack.php';
-require_once 'src/PodcastTrack.php';
-require_once 'src/AudioList.php';
-require_once 'src/AlbumList.php';
-require_once 'src/PlayList.php';
+require_once 'src/classes/render/Renderer.php';
+require_once 'src/classes/audio/tracks/AudioTrack.php';
+require_once 'src/classes/audio/tracks/AlbumTrack.php';
+require_once 'src/classes/audio/tracks/PodcastTrack.php';
+require_once 'src/classes/audio/lists/AudioList.php';
+require_once 'src/classes/audio/lists/AlbumList.php';
+require_once 'src/classes/audio/lists/PlayList.php';
 
-require_once 'src/AudioTrackRenderer.php';
-require_once 'src/AlbumTrackRenderer.php';
-require_once 'src/PodcastTrackRenderer.php';
-require_once 'src/AudioListRenderer.php';
+require_once 'src/classes/render/AudioTrackRenderer.php';
+require_once 'src/classes/render/AlbumTrackRenderer.php';
+require_once 'src/classes/render/PodcastTrackRenderer.php';
+require_once 'src/classes/render/AudioListRenderer.php';
 
-require_once 'src/exceptions/InvalidPropertyNameException.php';
-require_once 'src/exceptions/InvalidPropertyValueException.php';
-require_once 'src/exceptions/NotEditablePropertyException.php';
+require_once 'src/classes/exception/InvalidPropertyNameException.php';
+require_once 'src/classes/exception/InvalidPropertyValueException.php';
+require_once 'src/classes/exception/NotEditablePropertyException.php';
 
 
 $track1 = new AlbumTrack('I\'m with you', 'audio/01-Im_with_you_BB-King-Lucille.mp3');
