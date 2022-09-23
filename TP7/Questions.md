@@ -29,6 +29,6 @@ le namespace en fonction de l'emplacement du fichier dans l'arborescence.
      de la classe ou dans un use) auquel cas le namespace inscrit 
      diffère du namespace où se trouve la classe que l'on souhaite utiliser.
 
-10) La modification de l'arborescence des fichiers **n'impacte pas** les namespaces des classes.
-En revanche, il faut modifier les chemins de tous les ``require_once`` du 
+10) Des modifications dans les répertoires **n'impactent pas** les namespaces des classes.
+En revanche, il faut modifier les chemins dans tous les ``require_once`` du 
 programme principal.
