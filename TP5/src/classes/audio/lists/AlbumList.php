@@ -1,5 +1,6 @@
 <?php
 namespace iutnc\deefy\audio\lists;
+//namespace VENDOR\PROJECT\Module-Sous-partie
 
 use iutnc\deefy\audio\exception\InvalidPropertyNameException;
 use iutnc\deefy\audio\exception\NotEditablePropertyException;
