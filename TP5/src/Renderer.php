@@ -1,4 +1,5 @@
 <?php
+namespace iutnc\deefy\audio\render;
 
 interface Renderer
 {

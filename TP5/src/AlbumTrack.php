@@ -1,4 +1,6 @@
 <?php
+namespace iutnc\deefy\audio\tracks;
+
 //Att protected pour etre visible par le getter et setter de AudioTrack
 class AlbumTrack extends AudioTrack
 {

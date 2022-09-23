@@ -1,8 +1,9 @@
 <?php
+namespace iutnc\deefy\audio\tracks;
 
-use exceptions\InvalidPropertyNameException;
-use exceptions\InvalidPropertyValueException;
-use exceptions\NotEditablePropertyException;
+use iutnc\deefy\audio\exception\InvalidPropertyNameException;
+use iutnc\deefy\audio\exception\InvalidPropertyValueException;
+use iutnc\deefy\audio\exception\NotEditablePropertyException;
 
 class AudioTrack
 {
@@ -27,9 +28,6 @@ class AudioTrack
         return json_encode($this); //JSON_PRETTY_PRINT
     }
 
-    /**
-     * @throws InvalidPropertyNameException
-     */
     public function __get(string $att) : mixed
     {
         if (property_exists($this, $att)) return $this->$att;

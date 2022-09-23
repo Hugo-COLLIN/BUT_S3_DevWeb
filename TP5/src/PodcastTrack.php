@@ -1,5 +1,5 @@
 <?php
-
+namespace iutnc\deefy\audio\tracks;
 
 class PodcastTrack extends AudioTrack
 {

@@ -1,4 +1,10 @@
 <?php
+namespace iutnc\deefy\audio\render;
+
+use iutnc\deefy\audio\exception\InvalidPropertyValueException;
+use iutnc\deefy\audio\lists\AudioList;
+use iutnc\deefy\audio\tracks\AlbumTrack;
+use iutnc\deefy\audio\tracks\PodcastTrack;
 
 class AudioListRenderer implements Renderer
 {
@@ -11,9 +17,6 @@ class AudioListRenderer implements Renderer
         $this->list = $al;
     }
 
-    /**
-     * @throws \exceptions\InvalidPropertyValueException
-     */
     public function render(int $selector): string
     {
         $html = "<div class='trackList'>
@@ -25,7 +28,7 @@ class AudioListRenderer implements Renderer
         {
             if ($item instanceof AlbumTrack) $rend = new AlbumTrackRenderer($item);
             elseif ($item instanceof PodcastTrack) $rend = new PodcastTrackRenderer($item);
-            else throw new \exceptions\InvalidPropertyValueException();
+            else throw new InvalidPropertyValueException();
             $html .= "<li>{$rend->render(1)}</li>";
         }
 

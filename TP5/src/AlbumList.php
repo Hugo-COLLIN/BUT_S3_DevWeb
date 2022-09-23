@@ -1,4 +1,8 @@
 <?php
+namespace iutnc\deefy\audio\lists;
+
+use iutnc\deefy\audio\exception\InvalidPropertyNameException;
+use iutnc\deefy\audio\exception\NotEditablePropertyException;
 
 class AlbumList extends AudioList
 {
@@ -11,17 +15,13 @@ class AlbumList extends AudioList
     }
 
 
-    /**
-     * @throws \exceptions\InvalidPropertyNameException
-     * @throws \exceptions\NotEditablePropertyException
-     */
     public function __set(string $name, mixed $value) : void
     {
         if (!property_exists($this, $name))
-            throw new \exceptions\InvalidPropertyNameException();
+            throw new InvalidPropertyNameException();
         if ($name ==='artisteAlbum' || $name === 'dateSortie')
             $this->$name = $value;
         else
-            throw new \exceptions\NotEditablePropertyException();
+            throw new NotEditablePropertyException();
     }
 }

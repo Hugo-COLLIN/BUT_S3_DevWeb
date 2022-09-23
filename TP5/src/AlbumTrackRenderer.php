@@ -1,5 +1,9 @@
 <?php
+namespace iutnc\deefy\audio\render;
+
 //Pattern Template de methode (usage fréquent) : Algo d'aff des tracks valide pr tte sorte de track
+use iutnc\deefy\audio\tracks\AlbumTrack;
+
 class AlbumTrackRenderer extends AudioTrackRenderer
 {
     public function __construct(AlbumTrack $aT)

@@ -1,4 +1,7 @@
 <?php
+namespace iutnc\deefy\audio\lists;
+
+use iutnc\deefy\audio\tracks\AudioTrack;
 
 class PlayList extends AudioList
 {
