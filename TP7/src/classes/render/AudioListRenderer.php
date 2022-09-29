@@ -32,6 +32,24 @@ class AudioListRenderer implements Renderer
             $html .= "<li>{$rend->render(1)}</li>";
         }
 
+        /*Correction
+        foreach ($this->list->tracklist as $track)
+        {
+            $trackrend = null;
+            switch (get_class($track))
+            {
+                case 'AlbumTrack':
+                    $trackrend = new AlbumTrackRenderer($track);
+                    break;
+                case 'PodcastTrack':
+                    $trackrend = new PodcastTrackRenderer($track);
+                    break;
+            }
+
+            $html .= $trackrend->render(Renderer::COMPACT);
+        }
+        */
+
         /*
         for ($i = 0 ; $i < sizeof($this->list) ; $i ++)
         {
