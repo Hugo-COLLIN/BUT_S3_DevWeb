@@ -27,7 +27,7 @@ require_once 'src/classes/exception/InvalidPropertyNameException.php';
 require_once 'src/classes/exception/InvalidPropertyValueException.php';
 require_once 'src/classes/exception/NotEditablePropertyException.php';
 
-
+/*
 $track1 = new AlbumTrack('I\'m with you', 'audio/01-Im_with_you_BB-King-Lucille.mp3');
 $track2 = new AlbumTrack('I_Need_Your_Love', 'audio/02-I_Need_Your_Love-BB_King-Lucille.mp3');
 
@@ -62,7 +62,7 @@ catch (InvalidPropertyNameException | InvalidPropertyValueException | NotEditabl
 print $r->render(1);
 print $r->render(2);
 */
-
+/*
 $podcast = new PodcastTrack('Test', 'audio/03-Country_Girl-BB_King-Lucille.mp3');
 $podcast->genre = 'Talk Show';
 $podcast->auteur = 'Bli bla blo';
@@ -86,6 +86,11 @@ $plist2 = new PlayList("Musique");
 $plist2->addTrackList(array($track1));
 
 print $pLR->render(1);
+*/
+
+//TP7 AUTOLOADER
+require_once "src/loader/ClassLoader.php";
+$l = new \loader\ClassLoader("iutnc\\deefy\\", "src/classes");
 
 
-//$album = new AlbumList();
+
