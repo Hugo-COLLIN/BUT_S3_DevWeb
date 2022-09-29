@@ -1,0 +1,10 @@
+{
+  "name": "iutnc/deefy",
+  "type": "project",
+
+  "autoload": {
+    "psr-4": {
+
+    }
+  }
+}
