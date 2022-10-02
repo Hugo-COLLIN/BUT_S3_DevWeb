@@ -90,10 +90,10 @@ print $pLR->render(1);
 
 //TP7 AUTOLOADER
 require_once "src/loader/ClassLoader.php";
-$l = new \loader\ClassLoader("iutnc\\deefy\\", "src/classes");
-//$l->loadClass("src/classes/Class.php");
-$l->register();
+$l = new \loader\ClassLoader("iutnc\\deefy\\", "src/classes/");
+$l->loadClass("iutnc\\deefy\\Namespace\\ClassName");
+//$l->register();
 
 //GENERATED
-require_once 'vendor/autoload.php';
+//require_once 'vendor/autoload.php';
 
