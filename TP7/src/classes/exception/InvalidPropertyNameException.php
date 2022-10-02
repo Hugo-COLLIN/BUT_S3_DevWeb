@@ -1,5 +1,5 @@
 <?php
-namespace iutnc\deefy\audio\exception;
+namespace iutnc\deefy\exception;
 
 //Autre solution : laisser le contenu de la classe vide, on hérite de Exception
 

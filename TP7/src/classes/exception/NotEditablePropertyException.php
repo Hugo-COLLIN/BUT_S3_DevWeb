@@ -1,6 +1,6 @@
 <?php
 
-namespace iutnc\deefy\audio\exception;
+namespace iutnc\deefy\exception;
 
 use Exception;
 

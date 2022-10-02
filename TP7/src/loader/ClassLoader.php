@@ -9,12 +9,12 @@ class ClassLoader
     function __construct(string $prefix, string $dir)
     {
         $this->prefix = $prefix;
-        $this->dir = $dir;
+        $this->dir = $dir . "/";
     }
 
     function loadClass (string $classname) : void
     {
-        //echo 'ClassLoader::loadclass : ' . $classname;
+        echo 'ClassLoader::loadclass : ' . $classname . "<br>";
 
         if (!(str_starts_with($classname, $this->prefix)))
             return;
@@ -36,64 +36,6 @@ class ClassLoader
         si (fichier_existe($chemin_fichier)) alors require_once $chemin_fichier;
         */
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-    function loadClass (string $classname) : void
-    {
-        $splitted = explode("/", $classname);
-        $res = str_replace($this->dir, $this->prefix, $classname);
-        print $res;
-
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*
-        $splitted = explode("/", $this->dir);
-        $namespace = $this->prefix;
-        $i = 0;
-        foreach ($splitted as $part)
-        {
-            if ($i >= 2)
-                $namespace .= $part . "\\";
-            $i ++;
-        }
-        print $namespace;
-
-        //if (if_file($this->dir)) require_once $this->dir;
-        */
-    //}
 
     function register () : void
     {

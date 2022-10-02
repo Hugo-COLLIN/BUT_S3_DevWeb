@@ -1,5 +1,5 @@
 <?php
-namespace iutnc\deefy\audio\render;
+namespace iutnc\deefy\render;
 
 use iutnc\deefy\audio\tracks\AudioTrack;
 use iutnc\deefy\audio\tracks\PodcastTrack;

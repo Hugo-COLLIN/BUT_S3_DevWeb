@@ -1,7 +1,7 @@
 <?php
-namespace iutnc\deefy\audio\render;
+namespace iutnc\deefy\render;
 
-use iutnc\deefy\audio\exception\InvalidPropertyValueException;
+use iutnc\deefy\exception\InvalidPropertyValueException;
 use iutnc\deefy\audio\lists\AudioList;
 use iutnc\deefy\audio\tracks\AlbumTrack;
 use iutnc\deefy\audio\tracks\PodcastTrack;
