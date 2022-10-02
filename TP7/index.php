@@ -1,15 +1,5 @@
 <?php
-/*
-use iutnc\deefy\audio\exception\InvalidPropertyNameException;
-use iutnc\deefy\audio\exception\InvalidPropertyValueException;
-use iutnc\deefy\audio\exception\NotEditablePropertyException;
-use iutnc\deefy\audio\lists\PlayList;
-use iutnc\deefy\audio\render\AudioListRenderer;
-use iutnc\deefy\audio\render\PodcastTrackRenderer;
-use iutnc\deefy\audio\render\Renderer;
-use iutnc\deefy\audio\tracks\AlbumTrack;
-use iutnc\deefy\audio\tracks\PodcastTrack;
-*/
+
 use iutnc\deefy\audio\tracks as t;
 use iutnc\deefy\audio\lists as l;
 use iutnc\deefy\render AS r;
@@ -18,9 +8,15 @@ use iutnc\deefy\exception AS e;
 
 require_once "src/loader/ClassLoader.php";
 $l = new \loader\ClassLoader("iutnc\\deefy\\", "src/classes");
-$l->loadClass("iutnc\\deefy\\Namespace\\ClassName");
 $l->register();
 
+
+//GENERATED
+//require_once 'vendor/autoload.php';
+
+/*
+ --- MAIN ---
+ */
 
 $track1 = new t\AlbumTrack('I\'m with you', 'audio/01-Im_with_you_BB-King-Lucille.mp3');
 $track2 = new t\AlbumTrack('I_Need_Your_Love', 'audio/02-I_Need_Your_Love-BB_King-Lucille.mp3');
@@ -80,15 +76,3 @@ $plist2 = new l\PlayList("Musique");
 $plist2->addTrackList(array($track1));
 
 print $pLR->render(1);
-
-
-//TP7 AUTOLOADER
-/*
-require_once "src/loader/ClassLoader.php";
-$l = new \loader\ClassLoader("iutnc\\deefy\\", "src/classes/");
-//$l->loadClass("iutnc\\deefy\\Namespace\\ClassName");
-$l->register();
-*/
-//GENERATED
-//require_once 'vendor/autoload.php';
-

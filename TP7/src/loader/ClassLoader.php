@@ -25,16 +25,6 @@ class ClassLoader
         if (is_file($chemin_fichier)) require_once $chemin_fichier;
         //print($chemin_fichier);
         //var_dump($tab);
-        /*
-        if (!$classname begin $this->prefix)
-            return;
-
-        $chemin_fichier = remplacer $this->prefix par $this->root dans $classname
-        $chemin_fichier = remplacer '\\' par DIRECTORY_SEPARATOR dans chemin_fichier
-        ajouter ".php" à la fin de $chemin_fichier
-
-        si (fichier_existe($chemin_fichier)) alors require_once $chemin_fichier;
-        */
     }
 
     function register () : void
