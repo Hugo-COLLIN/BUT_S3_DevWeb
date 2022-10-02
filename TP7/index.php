@@ -1,18 +1,20 @@
 <?php
 
+
+
+// Personal autoloader
+/*require_once "src/loader/ClassLoader.php";
+$l = new \loader\ClassLoader("iutnc\\deefy\\", "src/classes");
+$l->register();
+*/
+
+//Composer autoloader
+require_once 'vendor/autoload.php';
+
 use iutnc\deefy\audio\tracks as t;
 use iutnc\deefy\audio\lists as l;
 use iutnc\deefy\render AS r;
 use iutnc\deefy\exception AS e;
-
-
-require_once "src/loader/ClassLoader.php";
-$l = new \loader\ClassLoader("iutnc\\deefy\\", "src/classes");
-$l->register();
-
-
-//GENERATED
-//require_once 'vendor/autoload.php';
 
 /*
  --- MAIN ---
