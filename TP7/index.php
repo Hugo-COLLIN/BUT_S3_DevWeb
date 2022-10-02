@@ -58,7 +58,6 @@ print $r->render(2);
 $podcast = new t\PodcastTrack('Test', 'audio/03-Country_Girl-BB_King-Lucille.mp3');
 $podcast->genre = 'Talk Show';
 $podcast->auteur = 'Bli bla blo';
-print $podcast;
 //var_dump($podcast);
 
 $pR = new r\PodcastTrackRenderer($podcast);
