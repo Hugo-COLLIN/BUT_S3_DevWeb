@@ -11,3 +11,7 @@
    2. 
 
 
+# Exercice 3
+![img_2.png](img_2.png)
+
+# Exercice 4
