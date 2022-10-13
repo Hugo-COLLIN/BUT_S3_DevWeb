@@ -21,9 +21,13 @@ switch ($_GET['action'])
                 <input type='submit' value='Valider'>
             </form>";
         else
-            $rend = "<p>Email: <strong>" . $_POST['mail'] .
-                "</strong>, Age: <strong>" . $_POST['age'] .
+        {
+            //$_POST['mail'] = filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL);
+
+            $rend = "<p>Email: <strong>" . filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL) .
+                "</strong>, Age: <strong>" . filter_var($_POST['age'], FILTER_VALIDATE_INT) .
                 "</strong>, Genre musical: <strong>" . $_POST['genre'] . "</strong></p>";
+        }
         break;
     case 'add-playlist' :
         $rend = "2";
