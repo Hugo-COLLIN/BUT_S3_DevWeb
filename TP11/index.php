@@ -3,12 +3,27 @@
 require_once "vendor/autoload.php";
 use \iutnc\deefy AS d;
 
+/*
+ * ---MAIN---
+ */
 if (!isset($_GET['action'])) $_GET['action'] = "";
+
 
 switch ($_GET['action'])
 {
     case 'add-user' :
-        $rend = "1";
+        if ($_SERVER['REQUEST_METHOD'] == "GET")
+            $rend = "
+            <form method='post'>
+                Email : <input type='email' name='mail'>
+                Age : <input type='number' name='age'>
+                Genre musical préféré : <input type='text' name='genre'>
+                <input type='submit' value='Valider'>
+            </form>";
+        else
+            $rend = "<p>Email: <strong>" . $_POST['mail'] .
+                "</strong>, Age: <strong>" . $_POST['age'] .
+                "</strong>, Genre musical: <strong>" . $_POST['genre'] . "</strong></p>";
         break;
     case 'add-playlist' :
         $rend = "2";
@@ -44,3 +59,8 @@ switch ($_GET['action'])
 
 
 
+<!--
+
+        else if ($_POST['mail'] != null OR $_POST['age'] != null OR $_POST['genre'] != null)
+            $rend = $form . "<small>Tous les champs sont obligatoires</small>";
+-->
