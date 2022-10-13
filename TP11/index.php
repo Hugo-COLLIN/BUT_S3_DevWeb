@@ -1,5 +1,8 @@
 <?php
-
+/*
+ * filter_var avec un FILTER_VALIDATE renvoie soit la chaine entière si ok, soit chaine vide si contient des caractères spéciaux
+ * alors que filter_var avec FILTER_SANITIZE renvoie la chaine dépourvue des caractères spéciaux
+ */
 require_once "vendor/autoload.php";
 use \iutnc\deefy AS d;
 
@@ -22,10 +25,12 @@ switch ($_GET['action'])
             </form>";
         else
         {
-            //$_POST['mail'] = filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL);
+            $_POST['mail'] = filter_var($_POST['mail'], FILTER_SANITIZE_EMAIL);
+            $_POST['age'] = filter_var($_POST['age'], FILTER_SANITIZE_NUMBER_INT);
+            $_POST['genre'] = filter_var($_POST['genre'], FILTER_SANITIZE_STRING);
 
-            $rend = "<p>Email: <strong>" . filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL) .
-                "</strong>, Age: <strong>" . filter_var($_POST['age'], FILTER_VALIDATE_INT) .
+            $rend = "<p>Email: <strong>" . $_POST['mail'] .
+                "</strong>, Age: <strong>" . $_POST['age'] .
                 "</strong>, Genre musical: <strong>" . $_POST['genre'] . "</strong></p>";
         }
         break;
