@@ -7,7 +7,9 @@ session_start();
     print_r($_SESSION['fibonacci']);
 
 //Correctionprof
+/*
 $_SESSION['fibo'] = [
     (isset($_GET['u0']) ? intval($_GET['u0']) : 0)
     (isset($_GET['u1']) ? intval($_GET['u0']) : 1)
 ];
+*/
