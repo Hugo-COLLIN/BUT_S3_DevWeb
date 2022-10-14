@@ -17,7 +17,7 @@ switch ($_GET['action'])
     case 'add-user' :
         if ($_SERVER['REQUEST_METHOD'] == "GET")
             $rend = "
-            <form method='post'>
+            <form method='post' action='?action=add-user'>
                 Email : <input type='email' name='mail'>
                 Age : <input type='number' name='age'>
                 Genre musical préféré : <input type='text' name='genre'>
