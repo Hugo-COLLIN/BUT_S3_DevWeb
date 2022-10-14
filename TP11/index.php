@@ -1,4 +1,6 @@
 <?php
+
+session_start();
 /*
  * filter_var avec un FILTER_VALIDATE renvoie soit la chaine entière si ok, soit chaine vide si contient des caractères spéciaux
  * alors que filter_var avec FILTER_SANITIZE renvoie la chaine dépourvue des caractères spéciaux
@@ -10,6 +12,9 @@ use \iutnc\deefy AS d;
  * ---MAIN---
  */
 if (!isset($_GET['action'])) $_GET['action'] = "";
+//$action = isset($_GET['action']) ? $_GET['action'] : null;
+//$action = $_GET['action'] ?? null;
+
 
 
 switch ($_GET['action'])
@@ -35,7 +40,33 @@ switch ($_GET['action'])
         }
         break;
     case 'add-playlist' :
-        $rend = "2";
+        if ($_SERVER['REQUEST_METHOD'] == "GET")
+        {
+            $rend = <<<END
+                <form method='post' action='?action=add-playlist'>
+                  Nom de la playlist : <input type='text' name='plnom'>
+                    <input type='submit' value='Valider'>
+                </form>
+            END;
+        }
+        else
+        {
+            $nom = filter_var($_POST['plnom'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $pl = new d\audio\lists\PlayList($nom);
+            $sessnom = "pl_$nom";
+            $_SESSION[$sessnom] = serialize($pl);
+            $alr = new d\render\AudioListRenderer($pl);
+
+            try {
+                $rend = $alr->render(d\render\AudioListRenderer::COMPACT);
+            }
+            catch (d\audio\exception\InvalidPropertyValueException $e)
+            {
+                $rend = "Erreur";
+            }
+
+            $rend .= "<a href=\"?action=add-podcasttrack\">Ajouter une piste &rarr;</a>";
+        }
         break;
     case 'add-podcasttrack' :
         $rend = "3";
