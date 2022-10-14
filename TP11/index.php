@@ -53,8 +53,8 @@ switch ($_GET['action'])
         {
             $nom = filter_var($_POST['plnom'], FILTER_SANITIZE_SPECIAL_CHARS);
             $pl = new d\audio\lists\PlayList($nom);
-            $sessnom = "pl_$nom";
-            $_SESSION[$sessnom] = serialize($pl);
+            //$sessnom = "pl_$nom";
+            $_SESSION["playlist"] = serialize($pl);
             $alr = new d\render\AudioListRenderer($pl);
 
             try {
@@ -79,28 +79,9 @@ switch ($_GET['action'])
             END;
         else
         {
-            $nom = filter_var($_POST['podnom'], FILTER_SANITIZE_SPECIAL_CHARS);
-            $pod = new d\audio\tracks\PodcastTrack($nom);
-            $sessnom = "pod_$nom";
-            //$_SESSION[$sessnom] = serialize($pod);
-            $ptr = new d\render\PodcastTrackRenderer($pod);
-
-            if (($file = $_FILES['upload']['name']) != "")
+            if (is_uploaded_file($_FILES['upload']['tmp_name']) && $_FILES['upload']['type'] === "audio/mp4")
             {
-                $dir = "audio/";
-                $path = pathinfo($file);
-                $filename = $path['filename'];
-                $ext = $path['extension'];
-                $temp_name = $_FILES['my_file']['tmp_name'];
-                $path_filename_ext = $dir . $filename . "." . $ext;
-            }
 
-            try {
-                $rend .= $ptr->render(d\render\Renderer::COMPACT);
-            }
-            catch (d\audio\exception\InvalidPropertyValueException $e)
-            {
-                $rend .= "Erreur";
             }
         }
 
@@ -137,4 +118,30 @@ switch ($_GET['action'])
 
         else if ($_POST['mail'] != null OR $_POST['age'] != null OR $_POST['genre'] != null)
             $rend = $form . "<small>Tous les champs sont obligatoires</small>";
+
+        ---
+
+        $nom = filter_var($_POST['podnom'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $pod = new d\audio\tracks\PodcastTrack($nom);
+            $sessnom = "pod_$nom";
+            //$_SESSION[$sessnom] = serialize($pod);
+            $ptr = new d\render\PodcastTrackRenderer($pod);
+
+            if (($file = $_FILES['upload']['name']) != "")
+            {
+                $dir = "audio/";
+                $path = pathinfo($file);
+                $filename = $path['filename'];
+                $ext = $path['extension'];
+                $temp_name = $_FILES['my_file']['tmp_name'];
+                $path_filename_ext = $dir . $filename . "." . $ext;
+            }
+
+            try {
+                $rend .= $ptr->render(d\render\Renderer::COMPACT);
+            }
+            catch (d\audio\exception\InvalidPropertyValueException $e)
+            {
+                $rend .= "Erreur";
+            }
 -->
