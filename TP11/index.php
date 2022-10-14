@@ -15,13 +15,13 @@ if (!isset($_GET['action'])) $_GET['action'] = "";
 //$action = isset($_GET['action']) ? $_GET['action'] : null;
 //$action = $_GET['action'] ?? null;
 
-
+$rend = "";
 
 switch ($_GET['action'])
 {
     case 'add-user' :
         if ($_SERVER['REQUEST_METHOD'] == "GET")
-            $rend = "
+            $rend .= "
             <form method='post' action='?action=add-user'>
                 Email : <input type='email' name='mail'>
                 Age : <input type='number' name='age'>
@@ -34,7 +34,7 @@ switch ($_GET['action'])
             $_POST['age'] = filter_var($_POST['age'], FILTER_SANITIZE_NUMBER_INT);
             $_POST['genre'] = filter_var($_POST['genre'], FILTER_SANITIZE_STRING);
 
-            $rend = "<p>Email: <strong>" . $_POST['mail'] .
+            $rend .= "<p>Email: <strong>" . $_POST['mail'] .
                 "</strong>, Age: <strong>" . $_POST['age'] .
                 "</strong>, Genre musical: <strong>" . $_POST['genre'] . "</strong></p>";
         }
@@ -42,7 +42,7 @@ switch ($_GET['action'])
     case 'add-playlist' :
         if ($_SERVER['REQUEST_METHOD'] == "GET")
         {
-            $rend = <<<END
+            $rend .= <<<END
                 <form method='post' action='?action=add-playlist'>
                   Nom de la playlist : <input type='text' name='plnom'>
                     <input type='submit' value='Valider'>
@@ -58,18 +58,52 @@ switch ($_GET['action'])
             $alr = new d\render\AudioListRenderer($pl);
 
             try {
-                $rend = $alr->render(d\render\AudioListRenderer::COMPACT);
+                $rend .= $alr->render(d\render\Renderer::COMPACT);
             }
             catch (d\audio\exception\InvalidPropertyValueException $e)
             {
-                $rend = "Erreur";
+                $rend .= "Erreur";
             }
 
             $rend .= "<a href=\"?action=add-podcasttrack\">Ajouter une piste &rarr;</a>";
         }
         break;
     case 'add-podcasttrack' :
-        $rend = "3";
+        if ($_SERVER['REQUEST_METHOD'] == "GET")
+            $rend .= <<<END
+                <form method='post' action='?action=add-podcasttrack' enctype="audio">
+                    Uploader un fichier : <input type="file" name="upload"><br>
+                    Nom du podcast : <input type='text' name='podnom'><br>
+                    <input type='submit' value='Valider'>
+                </form>
+            END;
+        else
+        {
+            $nom = filter_var($_POST['podnom'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $pod = new d\audio\tracks\PodcastTrack($nom);
+            $sessnom = "pod_$nom";
+            //$_SESSION[$sessnom] = serialize($pod);
+            $ptr = new d\render\PodcastTrackRenderer($pod);
+
+            if (($file = $_FILES['upload']['name']) != "")
+            {
+                $dir = "audio/";
+                $path = pathinfo($file);
+                $filename = $path['filename'];
+                $ext = $path['extension'];
+                $temp_name = $_FILES['my_file']['tmp_name'];
+                $path_filename_ext = $dir . $filename . "." . $ext;
+            }
+
+            try {
+                $rend .= $ptr->render(d\render\Renderer::COMPACT);
+            }
+            catch (d\audio\exception\InvalidPropertyValueException $e)
+            {
+                $rend .= "Erreur";
+            }
+        }
+
         break;
     default:
         $rend = "Bienvenue !";
