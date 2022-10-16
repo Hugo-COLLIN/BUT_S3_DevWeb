@@ -6,7 +6,7 @@ session_start();
  * alors que filter_var avec FILTER_SANITIZE renvoie la chaine dépourvue des caractères spéciaux
  */
 require_once "vendor/autoload.php";
-use \iutnc\deefy AS d;
+use iutnc\deefy AS d;
 
 /*
  * ---MAIN---
@@ -60,7 +60,7 @@ switch ($_GET['action'])
             try {
                 $rend .= $alr->render(d\render\Renderer::COMPACT);
             }
-            catch (d\audio\exception\InvalidPropertyValueException $e)
+            catch (d\exception\InvalidPropertyValueException $e)
             {
                 $rend .= "Erreur";
             }
@@ -69,47 +69,59 @@ switch ($_GET['action'])
         }
         break;
     case 'add-podcasttrack' :
-        if ($_SERVER['REQUEST_METHOD'] == "GET")
+        if (!isset($_SESSION["playlist"]))
+            $rend .= "Créez d'abord une playlist";
+        else if ($_SERVER['REQUEST_METHOD'] == "GET")
             $rend .= <<<END
-                <form method='post' action='?action=add-podcasttrack' enctype="audio">
+                <form method='post' action='?action=add-podcasttrack' enctype="multipart/form-data">
                     Uploader un fichier : <input type="file" name="upload"><br>
-                    Nom du podcast : <input type='text' name='podnom'><br>
+                    Nom du podcast : <input type='text' name='podname'><br>
                     <input type='submit' value='Valider'>
                 </form>
             END;
         else
         {
+            $backLink =  "<br><a href='?action=add-podcasttrack'>&larr; Retour</a>";
             //if (is_uploaded_file($_FILES['upload']['tmp_name']) && $_FILES['upload']['type'] === "audio/mp4")
-            if (isset($_FILES["upload"]) && $_FILES["upload"]["error"] === 0)
+            if (isset($_FILES["upload"]) && $_FILES["upload"]["error"] == 0)
             {
                 $allowed = array("mp3" => "audio/mp3", "mpeg" => "audio/mpeg");
-                $pNom = $_FILES["upload"]["name"];
+                $pNom = filter_var($_FILES["upload"]["name"], FILTER_SANITIZE_SPECIAL_CHARS);
                 $pType = $_FILES["upload"]["type"];
                 $pSize = $_FILES["upload"]["size"];
 
                 // Vérifie l'extension du fichier
                 $ext = pathinfo($pNom, PATHINFO_EXTENSION);
-                if(!array_key_exists($ext, $allowed)) die("Erreur : Veuillez sélectionner un format de fichier valide.");
+                if(!array_key_exists($ext, $allowed))
+                {
+                    $rend .= "Erreur : Veuillez sélectionner un format de fichier valide. $backLink";
+                    break;
+                }
 
                 // Vérifie la taille du fichier - 5Mo maximum
-                $maxsize = 5 * 1024 * 1024;
-                if($pSize > $maxsize) die("Erreur: La taille du fichier est supérieure à la limite autorisée.");
+                $maxsize = 20 * 1024 * 1024;
+                if($pSize > $maxsize)
+                {
+                    $rend .= "Erreur: La taille du fichier est supérieure à la limite autorisée. $backLink";
+                    break;
+                }
 
                 // Vérifie le type MIME du fichier
-                if(in_array($pType, $allowed)){
+                if(in_array($pType, $allowed))
                     // Vérifie si le fichier existe avant de le télécharger.
-                    if(file_exists("audio/" . $_FILES["upload"]["name"])){
-                        echo $_FILES["upload"]["name"] . " existe déjà.";
-                    } else{
-                        move_uploaded_file($_FILES["upload"]["tmp_name"], "audio/" . $_FILES["upload"]["name"]);
-                        echo "Votre fichier a été téléchargé avec succès.";
+                    if(file_exists("./audio/" . $_FILES["upload"]["name"]))
+                        $rend .= $_FILES["upload"]["name"] . " existe déjà. $backLink";
+                    else {
+                        move_uploaded_file($_FILES["upload"]["tmp_name"], "./audio/" . $_FILES["upload"]["name"]);
+                        $rend .= "Votre fichier a été téléchargé avec succès. $backLink";
                     }
-                } else{
-                    echo "Error: Il y a eu un problème de téléchargement de votre fichier. Veuillez réessayer.";
-                }
-            } else{
-                $rend = "Pas de fichier";
+                else
+                    $rend .= "Erreur: Il y a eu un problème de téléchargement de votre fichier. Veuillez réessayer. $backLink";
             }
+            else if (isset($_POST["podname"]))
+                $rend .= "Veuillez uploader un fichier $backLink";
+            else
+                $rend .= "Veuillez rentrer toutes les informations nécessaires. $backLink";
         }
 
         break;
@@ -138,37 +150,3 @@ switch ($_GET['action'])
     <?php echo $rend; ?>
 </body>
 </html>
-
-
-
-<!--
-
-        else if ($_POST['mail'] != null OR $_POST['age'] != null OR $_POST['genre'] != null)
-            $rend = $form . "<small>Tous les champs sont obligatoires</small>";
-
-        ---
-
-        $nom = filter_var($_POST['podnom'], FILTER_SANITIZE_SPECIAL_CHARS);
-            $pod = new d\audio\tracks\PodcastTrack($nom);
-            $sessnom = "pod_$nom";
-            //$_SESSION[$sessnom] = serialize($pod);
-            $ptr = new d\render\PodcastTrackRenderer($pod);
-
-            if (($file = $_FILES['upload']['name']) != "")
-            {
-                $dir = "audio/";
-                $path = pathinfo($file);
-                $filename = $path['filename'];
-                $ext = $path['extension'];
-                $temp_name = $_FILES['my_file']['tmp_name'];
-                $path_filename_ext = $dir . $filename . "." . $ext;
-            }
-
-            try {
-                $rend .= $ptr->render(d\render\Renderer::COMPACT);
-            }
-            catch (d\audio\exception\InvalidPropertyValueException $e)
-            {
-                $rend .= "Erreur";
-            }
--->
