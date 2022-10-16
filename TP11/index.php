@@ -83,38 +83,47 @@ switch ($_GET['action'])
         {
             $backLink =  "<br><a href='?action=add-podcasttrack'>&larr; Retour</a>";
             //if (is_uploaded_file($_FILES['upload']['tmp_name']) && $_FILES['upload']['type'] === "audio/mp4")
-            if (isset($_FILES["upload"]) && $_FILES["upload"]["error"] == 0)
-            {
+            if (isset($_FILES["upload"]) && $_FILES["upload"]["error"] == 0) {
                 $allowed = array("mp3" => "audio/mp3", "mpeg" => "audio/mpeg");
-                $pNom = filter_var($_FILES["upload"]["name"], FILTER_SANITIZE_SPECIAL_CHARS);
+                $pFilename = filter_var($_FILES["upload"]["name"], FILTER_SANITIZE_SPECIAL_CHARS);
                 $pType = $_FILES["upload"]["type"];
                 $pSize = $_FILES["upload"]["size"];
+                $pNom = $_POST["podname"];
 
                 // Vérifie l'extension du fichier
-                $ext = pathinfo($pNom, PATHINFO_EXTENSION);
-                if(!array_key_exists($ext, $allowed))
-                {
+                $ext = pathinfo($pFilename, PATHINFO_EXTENSION);
+                if (!array_key_exists($ext, $allowed)) {
                     $rend .= "Erreur : Veuillez sélectionner un format de fichier valide. $backLink";
                     break;
                 }
 
                 // Vérifie la taille du fichier - 5Mo maximum
                 $maxsize = 20 * 1024 * 1024;
-                if($pSize > $maxsize)
-                {
+                if ($pSize > $maxsize) {
                     $rend .= "Erreur: La taille du fichier est supérieure à la limite autorisée. $backLink";
                     break;
                 }
 
+                $dir = "";
+                $pT = new d\audio\tracks\PodcastTrack($pNom, $dir);
                 // Vérifie le type MIME du fichier
-                if(in_array($pType, $allowed))
+                if (in_array($pType, $allowed)) {
                     // Vérifie si le fichier existe avant de le télécharger.
-                    if(file_exists("./audio/" . $_FILES["upload"]["name"]))
-                        $rend .= $_FILES["upload"]["name"] . " existe déjà. $backLink";
+                    if (file_exists("./audio/" . $_FILES["upload"]["name"]))
+                        $rend .= "$pFilename existe déjà. $backLink";
                     else {
-                        move_uploaded_file($_FILES["upload"]["tmp_name"], "./audio/" . $_FILES["upload"]["name"]);
-                        $rend .= "Votre fichier a été téléchargé avec succès. $backLink";
+                        $dir = "./audio/" . $_FILES["upload"]["name"];
+                        move_uploaded_file($_FILES["upload"]["tmp_name"], $dir);
+                        $rend .= "Votre fichier $pFilename a été téléchargé avec succès. $backLink";
+
+                        $pl = unserialize($_SESSION["playlist"]);
+                        $pl->addTrack($pT);
+                        $_SESSION["playlist"] = serialize($pl);
                     }
+
+                    $ptr =  new d\render\PodcastTrackRenderer($pT);
+                    $rend .= $ptr->render(d\render\Renderer::COMPACT);
+                }
                 else
                     $rend .= "Erreur: Il y a eu un problème de téléchargement de votre fichier. Veuillez réessayer. $backLink";
             }
