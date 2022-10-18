@@ -14,6 +14,7 @@ DS_store
 
 # Config files
 *.ini
+.ini
 
 # Log file
 *.log
