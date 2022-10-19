@@ -2,9 +2,6 @@
 
 namespace iutnc\deefy\db;
 
-
-//use \PDO AS PDO;
-
 use \PDO as PDO;
 
 class ConnectionFactory
