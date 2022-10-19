@@ -6,16 +6,16 @@ use PDO;
 
 class ConnectionFactory
 {
-    public static $db = null;
+    public static PDO|null $db = null;
     public static array $config = [];
 
 
-    function setConfig(string $file): void
+    public static function setConfig(string $file): void
     {
         self::$config = parse_ini_file($file);
     }
 
-    public static function makeConnection()
+    public static function makeConnection() : PDO
     {
         if (self::$db == null) {
             $dsn = self::$config['driver'] .

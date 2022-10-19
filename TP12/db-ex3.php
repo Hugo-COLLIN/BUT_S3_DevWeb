@@ -2,8 +2,12 @@
 
 require_once 'vendor/autoload.php';
 
-//use
+//use x6
 
-\iutnc\deefy\db\ConnectionFactory::setConfig('./conf/conf.ini');
+use \iutnc\deefy\db\ConnectionFactory;
+
+ConnectionFactory::setConfig('./config.ini');
+ConnectionFactory::makeConnection();
+
 
 
