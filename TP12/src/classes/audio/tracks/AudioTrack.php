@@ -53,4 +53,9 @@ class AudioTrack
 
         $this->$att = $value;
     }
+
+    public function insertTrack (array $track)
+    {
+
+    }
 }

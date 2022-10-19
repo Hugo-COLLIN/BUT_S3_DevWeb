@@ -27,4 +27,9 @@ class PlayList extends AudioList
             $this->dureeTot += $item->duree;
 
     }
+
+    public function getTrackList ()
+    {
+
+    }
 }
