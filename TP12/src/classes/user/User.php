@@ -2,7 +2,8 @@
 namespace iutnc\deefy\user;
 
 use iutnc\deefy\exception AS e;
-use \iutnc\deefy\db\ConnectionFactory;
+use iutnc\deefy\db\ConnectionFactory;
+use \PDO as PDO;
 
 class User
 {
@@ -28,14 +29,14 @@ class User
     public function getPlaylist() : array
     {
         $db = ConnectionFactory::makeConnection();
-        $st = $db->prepare("SELECT 'id', 'nom' FROM `playlist` p, `user2playlist` up
-                                    WHERE p.id = up.id");
+        $st = $db->prepare("SELECT distinct id, nom FROM `playlist` p, `user2playlist` up
+                                    WHERE p.id = up.id_pl");
         $var = $this->email;
-        $st->bindParam(1, $var);
+        //$st->bindParam(1, $var);
         $st->execute();
         $userPlaylists = [];
-        foreach ($st->fetchAll(\PDO::FETCH_ASSOC) as $row) {
-            print_r($row); echo '<br>';
+        foreach ($st->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            //print_r($row); echo '<br>';
             $playlist = new \iutnc\deefy\audio\lists\PlayList($row['nom']);
             $playlist->id = $row['id'];
             array_push($userPlaylists, $playlist);
@@ -49,8 +50,8 @@ class User
         $st = $db->prepare("SELECT * FROM playlist");
         $st->execute();
 
-        foreach ($st->fetchAll(\PDO::FETCH_ASSOC) as $row) {
-            echo $row['id'];
+        foreach ($st->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            echo $row['id'] . "<br>";
         }
     }
 }
