@@ -50,7 +50,7 @@ class User
         $st = $db->prepare("SELECT * FROM playlist");
         $st->execute();
 
-        foreach ($st->fetchAll(PDO::FETCH_ASSOC) as $row) {
+        foreach ($st->fetchAll(PDO::FETCH_NUM) as $row) {
             echo $row['id'] . "<br>";
         }
     }
