@@ -156,7 +156,17 @@ switch ($_GET['action'])
         {
             $mail = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
             $pwd = $_POST['password'];
-            d\auth\Auth::authentificate($mail, $pwd);
+            $user = d\auth\Auth::authentificate($mail, $pwd);
+            $rend .= "<p>Successfully connected !</p><ul>";
+
+            foreach ($user->getPlaylist() as $item)
+            {
+                $alr = new d\render\AudioListRenderer($item);
+                $rend .= "<li>" . $alr->render(d\render\Renderer::COMPACT) . "</li>";
+            }
+            $rend .= "</ul>";
+
+
         }
         //
         break;

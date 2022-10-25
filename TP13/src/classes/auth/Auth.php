@@ -11,7 +11,7 @@ class Auth
     /**
      * @throws AuthException
      */
-    public static function authentificate(string $email, string $pwd) : User|null
+    public static function authentificate(string $email, string $pwd)
     {
         $db = \iutnc\deefy\db\ConnectionFactory::makeConnection();
         $q = "SELECT * FROM USER WHERE email=?";
@@ -24,6 +24,6 @@ class Auth
             }
             else throw new AuthException("Authentification failed : invalid credentials");
         }
-        return null;
+        //return null;
     }
 }
