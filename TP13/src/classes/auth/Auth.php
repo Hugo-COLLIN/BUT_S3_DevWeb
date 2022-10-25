@@ -13,11 +13,20 @@ class Auth
      */
     public static function authentificate(string $email, string $pwd)
     {
-        $db = \iutnc\deefy\db\ConnectionFactory::makeConnection();
+        $db = ConnectionFactory::makeConnection();
         $q = "SELECT * FROM USER WHERE email=?";
         $st = $db->prepare($q);
+        $res = $st->execute([$email]);
 
-        if ($st->execute([$email])) {
+        if (!res) throw new AuthException();
+
+        $user = $st->fetch(\PDO::\FETCH_ASSOC);
+
+        if (!$user) throw new AuthException();
+
+        if (!password_verify($pass, $user['passwd'])) throw new AuthException();
+
+        if () {
             $user = $st->fetch(\PDO::FETCH_ASSOC);
             if ($user && password_verify($pwd, $user['passwd'])) {
                 return new User($user['email'], $user['passwd'], $user['role']);
@@ -25,5 +34,13 @@ class Auth
             else throw new AuthException("Authentification failed : invalid credentials");
         }
         //return null;
+    }
+
+    function loadProfile()
+    {
+        $q = "SELET * from user where email = ?";
+        makeco
+
+
     }
 }

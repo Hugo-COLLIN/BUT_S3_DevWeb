@@ -7,13 +7,19 @@ require_once 'vendor/autoload.php';
 use \iutnc\deefy\db\ConnectionFactory;
 
 ConnectionFactory::setConfig('./config.ini');
-ConnectionFactory::makeConnection();
 
+$user = new iutnc\deefy\user\User("user1@email.com", "1234", "admin");
 
-$u = new iutnc\deefy\user\User("a@b.com", "1234", "admin");
+$usrPl = $user->getPlaylist();
+
+foreach( $usrPl as $pl)
+    echo $pl->nom $pl->id
 
 print_r(
-    $u->getPlaylist()
+    $user->getPlaylist()
 );
 
 //$u->testQuery();
+
+
+//Q2

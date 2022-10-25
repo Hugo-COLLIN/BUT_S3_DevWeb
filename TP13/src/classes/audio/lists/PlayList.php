@@ -30,6 +30,21 @@ class PlayList extends AudioList
 
     public function getTrackList ()
     {
+        $db make co
+        $q = "SELECT * from track t, playlist2track p WHERE t.id = p.id_tr";
 
+        $st = premape;
+
+        $tracklist = [];
+
+        foreach ($st->fetchall(PDO::FETCH_ASSOC) as $row) {
+            switch ($row['type'])
+            {
+                case 'A':
+                    $track = new tr\AlbumTrack($row titre, )
+
+            }
+
+        }
     }
 }

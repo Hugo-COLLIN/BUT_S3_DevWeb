@@ -157,6 +157,8 @@ switch ($_GET['action'])
             $mail = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
             $pwd = $_POST['password'];
             $user = d\auth\Auth::authentificate($mail, $pwd);
+            d\auth\Auth::loadProfile($_POST['email']);
+            $authuser = unserialize($_SESSION['user']);
             $rend .= "<p>Successfully connected !</p><ul>";
 
             foreach ($user->getPlaylist() as $item)
@@ -168,8 +170,13 @@ switch ($_GET['action'])
 
 
         }
-        //
+        //ds try catch
         break;
+
+    case 'adduser':
+        d\auth\Auth::reister($_POST['email'], $_POST['password']);
+        $rend .= "<h4>Compte créé avec succès - vous pouvez vous connecter</h4>"
+            //Ds try catch
     default:
         $rend = "Bienvenue !";
 }
