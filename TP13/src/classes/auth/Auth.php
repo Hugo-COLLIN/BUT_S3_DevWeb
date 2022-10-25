@@ -3,19 +3,27 @@
 namespace iutnc\deefy\auth;
 
 use iutnc\deefy\exception\AuthException;
+use \iutnc\deefy\db\ConnectionFactory;
+use iutnc\deefy\user\User;
 
 class Auth
 {
-    public static function authentificate()
+    /**
+     * @throws AuthException
+     */
+    public static function authentificate(string $email, string $pwd) : User|null
     {
-        $q = "SELECT * FROM USER WHERE id=?";
+        $db = \iutnc\deefy\db\ConnectionFactory::makeConnection();
+        $q = "SELECT * FROM USER WHERE email=?";
+        $st = $db->prepare($q);
 
-        db2_prepare(fbird_execute(
-
-
-        ))
-        fetch
-        if (!$user) throw new AuthException("failed");
-        if (!password_verify($pass))
+        if ($st->execute([$email])) {
+            $user = $st->fetch(\PDO::FETCH_ASSOC);
+            if ($user && password_verify($pwd, $user['passwd'])) {
+                return new User($user['email'], $user['passwd'], $user['role']);
+            }
+            else throw new AuthException("Authentification failed : invalid credentials");
+        }
+        return null;
     }
 }

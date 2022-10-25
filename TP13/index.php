@@ -7,10 +7,16 @@ session_start();
  */
 require_once "vendor/autoload.php";
 use iutnc\deefy AS d;
+use \iutnc\deefy\db\ConnectionFactory;
+
 
 /*
  * ---MAIN---
  */
+
+ConnectionFactory::setConfig('./config.ini');
+ConnectionFactory::makeConnection();
+
 if (!isset($_GET['action'])) $_GET['action'] = "";
 //$action = isset($_GET['action']) ? $_GET['action'] : null;
 //$action = $_GET['action'] ?? null;
@@ -135,8 +141,25 @@ switch ($_GET['action'])
 
         break;
     case 'signin':
-        if get
-        d\auth\Auth::authentificate();
+        if ($_SERVER['REQUEST_METHOD'] == "GET")
+        {
+            $rend .= <<<END
+                <h3>Connexion</h3>
+                <form method='post' action='?action=signin' enctype="multipart/form-data">
+                    Email : <input type="email" name="email">
+                    Password : <input type='text' name='password'>
+                    <input type='submit' value='Valider'>
+                </form>
+            END;
+        }
+        else
+        {
+            $mail = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+            $pwd = $_POST['password'];
+            d\auth\Auth::authentificate($mail, $pwd);
+        }
+        //
+        break;
     default:
         $rend = "Bienvenue !";
 }
@@ -155,6 +178,8 @@ switch ($_GET['action'])
 <body>
     <ul>
         <li><a href="./">Accueil</a></li>
+        <li><a href="./?action=signin">Connexion</a></li>
+        <li><a href="./?action=signup">Inscription</a></li>
         <li><a href="./?action=add-user">Ajouter un utilisateur</a></li>
         <li><a href="./?action=add-playlist">Ajouter une playlist</a></li>
         <li><a href="./?action=add-podcasttrack">Ajouter un podcast</a></li>
