@@ -18,29 +18,29 @@ class Auth
         $st = $db->prepare($q);
         $res = $st->execute([$email]);
 
-        if (!res) throw new AuthException();
+        if (!$res) throw new AuthException();
 
-        $user = $st->fetch(\PDO::\FETCH_ASSOC);
+        $user = $st->fetch(\PDO::FETCH_ASSOC);
 
         if (!$user) throw new AuthException();
 
-        if (!password_verify($pass, $user['passwd'])) throw new AuthException();
-
+        if (!password_verify($pwd, $user['passwd'])) throw new AuthException();
+/*
         if () {
             $user = $st->fetch(\PDO::FETCH_ASSOC);
             if ($user && password_verify($pwd, $user['passwd'])) {
                 return new User($user['email'], $user['passwd'], $user['role']);
             }
             else throw new AuthException("Authentification failed : invalid credentials");
-        }
+        }*/
         //return null;
     }
-
+/*
     function loadProfile()
     {
         $q = "SELET * from user where email = ?";
         makeco
 
 
-    }
+    }*/
 }
