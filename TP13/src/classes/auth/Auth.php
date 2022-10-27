@@ -35,12 +35,18 @@ class Auth
         }*/
         //return null;
     }
-/*
-    function loadProfile()
+
+    public static function loadProfile(string $email)
     {
-        $q = "SELET * from user where email = ?";
-        makeco
+        $db = ConnectionFactory::makeConnection();
+        $q = "SELECT * from user where email = ?";
+        $st = $db->prepare($q);
+        $res = $st->execute([$email]);
 
+        $user = $st->fetch(\PDO::FETCH_ASSOC);
 
-    }*/
+        if ($st->execute([$email])) {
+                return new User($user['email'], $user['passwd'], $user['role']);
+        }
+    }
 }
