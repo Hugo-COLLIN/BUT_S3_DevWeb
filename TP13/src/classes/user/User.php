@@ -29,10 +29,12 @@ class User
     public function getPlaylist() : array
     {
         $db = ConnectionFactory::makeConnection();
-        $st = $db->prepare("SELECT distinct id, nom FROM `playlist` p, `user2playlist` up
-                                    WHERE p.id = up.id_pl");
+        $st = $db->prepare("SELECT playlist.id, nom FROM playlist, user2playlist, user 
+                        WHERE playlist.id = user2playlist.id_pl 
+                          AND user2playlist.id_user = user.id 
+                          AND user.email = ?");
         $var = $this->email;
-        //$st->bindParam(1, $var);
+        $st->bindParam(1, $var);
         $st->execute();
         $userPlaylists = [];
         foreach ($st->fetchAll(PDO::FETCH_ASSOC) as $row) {

@@ -27,7 +27,7 @@ class PlayList extends AudioList
             $this->dureeTot += $item->duree;
 
     }
-
+/*
     public function getTrackList ()
     {
         $db make co
@@ -47,4 +47,5 @@ class PlayList extends AudioList
 
         }
     }
+*/
 }

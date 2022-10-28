@@ -157,17 +157,17 @@ switch ($_GET['action'])
             $mail = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
             $pwd = $_POST['password'];
             try {
-                $user = d\auth\Auth::authentificate($mail, $pwd);
-                d\auth\Auth::loadProfile($_POST['email']);
+                d\auth\Auth::authentificate($mail, $pwd);
+                $user = d\auth\Auth::loadProfile($_POST['email']);
                 //$authuser = unserialize($_SESSION['user']);
                 $rend .= "<p>Successfully connected !</p><ul>";
-                /*
+
                 foreach ($user->getPlaylist() as $item)
                 {
                     $alr = new d\render\AudioListRenderer($item);
                     $rend .= "<li>" . $alr->render(d\render\Renderer::COMPACT) . "</li>";
                 }
-                $rend .= "</ul>";*/
+                $rend .= "</ul>";
             }
             catch (Exception $e)
             {
