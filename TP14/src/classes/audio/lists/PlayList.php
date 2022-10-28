@@ -1,7 +1,10 @@
 <?php
 namespace iutnc\deefy\audio\lists;
 
+use iutnc\deefy as d;
 use iutnc\deefy\audio\tracks\AudioTrack;
+use iutnc\deefy\db\ConnectionFactory;
+use iutnc\deefy\exception\EmptyRequestException;
 
 class PlayList extends AudioList
 {
@@ -26,6 +29,33 @@ class PlayList extends AudioList
         foreach ($this->tracklist as $item)
             $this->dureeTot += $item->duree;
 
+    }
+
+    /**
+     * @throws EmptyRequestException
+     */
+    public static function find (int $idPl) : PlayList
+    {
+        $db = ConnectionFactory::makeConnection();
+        $qPl = "SELECT nom FROM playlist WHERE id=?";
+        $stPl = $db->prepare($qPl);
+
+        if($stPl->execute([$idPl]))
+        {
+            $qTrack = "SELECT * FROM track, playlist2track
+                        WHERE track.id = playlist2track.id_track
+                        AND playlist2track.id_pl = ?";
+            $stTr = $db->prepare($qTrack);
+            $stPl->execute([$idPl]);
+
+            $tabTr = [];
+            foreach ($stTr->fetch(\PDO::FETCH_ASSOC) as $track) {
+                $tabTr[] = new d\audio\tracks\PodcastTrack($track["titre"], $track["filename"]);
+            }
+            $db = null;
+            return new PlayList($stPl["nom"], $tabTr);
+        }
+        throw new d\exception\EmptyRequestException();
     }
 /*
     public function getTrackList ()
