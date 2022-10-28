@@ -11,10 +11,10 @@ ConnectionFactory::setConfig('./config.ini');
 $user = new iutnc\deefy\user\User("user1@email.com", "1234", "admin");
 
 $usrPl = $user->getPlaylist();
-
+/*
 foreach( $usrPl as $pl)
     echo $pl->nom $pl->id
-
+*/
 print_r(
     $user->getPlaylist()
 );
