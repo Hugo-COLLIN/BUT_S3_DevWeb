@@ -1,0 +1,15 @@
+{
+    "name": "iutnc/deefy",
+    "autoload": {
+        "psr-4": {
+            "iutnc\\deefy\\": "src/classes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Hugo COLLIN",
+            "email": "hugo.collin1@outlook.fr"
+        }
+    ],
+    "require": {}
+}
