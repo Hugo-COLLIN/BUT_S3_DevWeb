@@ -4,6 +4,7 @@ namespace iutnc\deefy\auth;
 
 use iutnc\deefy\exception\AuthException;
 use \iutnc\deefy\db\ConnectionFactory;
+use iutnc\deefy\exception\PasswordStrenghException;
 use iutnc\deefy\user\User;
 
 class Auth
@@ -54,26 +55,29 @@ class Auth
         }
     }
 
-    register()
-{
-    if (!self::checkpasswordstrengh($pass, 4))
-        throw;
-
-    $hash = password_hash($pass, PASSWORD_DEFAULT)
-    ;
-    try makeco;
-
-    $query_email = ;
-
-}
-
-    checkaccesslevel ()
+    public static function checkPasswordStrengh(string $pass, $num) : bool
     {
+        return true;
+    }
+
+    /**
+     * @throws PasswordStrenghException
+     */
+    public static function register(string $mail, string $pass)
+    {
+        if (!self::checkPasswordStrengh($pass, 4))
+            throw new PasswordStrenghException();
+
+        $hash = password_hash($pass, PASSWORD_DEFAULT);
+        ConnectionFactory::makeConnection();
+
+        //$query_email = ;
 
     }
 
 
-    ()
+/*
+    public static function checkaccesslevel ()
     {
         if ($user->role === User::ADMIN_USER) return;
 
@@ -87,4 +91,5 @@ class Auth
             ;
         if (!res) throw
     }
+*/
 }

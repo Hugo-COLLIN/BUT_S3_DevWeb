@@ -30,19 +30,17 @@ switch ($_GET['action'])
             $rend .= "
             <form method='post' action='?action=add-user'>
                 Email : <input type='email' name='mail'>
-                Age : <input type='number' name='age'>
-                Genre musical préféré : <input type='text' name='genre'>
+                Mot de passe : <input type='password' name='pwd'>
                 <input type='submit' value='Valider'>
             </form>";
         else
         {
             $_POST['mail'] = filter_var($_POST['mail'], FILTER_SANITIZE_EMAIL);
-            $_POST['age'] = filter_var($_POST['age'], FILTER_SANITIZE_NUMBER_INT);
-            $_POST['genre'] = filter_var($_POST['genre'], FILTER_SANITIZE_STRING);
+            $_POST['pwd'] = filter_var($_POST['pwd'], FILTER_SANITIZE_SPECIAL_CHARS);
 
-            $rend .= "<p>Email: <strong>" . $_POST['mail'] .
-                "</strong>, Age: <strong>" . $_POST['age'] .
-                "</strong>, Genre musical: <strong>" . $_POST['genre'] . "</strong></p>";
+            d\auth\Auth::register($_POST["mail"], $_POST["pwd"]);
+            $rend .= "<p><strong>" . $_POST['mail'] .
+                " a été enregistre dans la base.</strong></p>";
         }
         break;
     case 'add-playlist' :
@@ -201,8 +199,7 @@ switch ($_GET['action'])
     <ul>
         <li><a href="./">Accueil</a></li>
         <li><a href="./?action=signin">Connexion</a></li>
-        <li><a href="./?action=signup">Inscription</a></li>
-        <li><a href="./?action=add-user">Ajouter un utilisateur</a></li>
+        <li><a href="./?action=add-user">Inscription</a></li>
         <li><a href="./?action=add-playlist">Ajouter une playlist</a></li>
         <li><a href="./?action=add-podcasttrack">Ajouter un podcast</a></li>
     </ul>
