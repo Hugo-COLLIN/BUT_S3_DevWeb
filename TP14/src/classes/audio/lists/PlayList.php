@@ -42,6 +42,8 @@ class PlayList extends AudioList
 
         if($stPl->execute([$idPl]))
         {
+            $resPl = $stPl->fetch(\PDO::FETCH_ASSOC);
+
             $qTrack = "SELECT * FROM track, playlist2track
                         WHERE track.id = playlist2track.id_track
                         AND playlist2track.id_pl = ?";
@@ -49,13 +51,13 @@ class PlayList extends AudioList
             $stPl->execute([$idPl]);
 
             $tabTr = [];
-            foreach ($stTr->fetch(\PDO::FETCH_ASSOC) as $track) {
+            while ($track = $stTr->fetch(\PDO::FETCH_ASSOC)) {
                 $tabTr[] = new d\audio\tracks\PodcastTrack($track["titre"], $track["filename"]);
             }
             $db = null;
-            return new PlayList($stPl["nom"], $tabTr);
+            return new PlayList($resPl["nom"], $tabTr);
         }
-        throw new d\exception\EmptyRequestException();
+        else throw new d\exception\EmptyRequestException();
     }
 /*
     public function getTrackList ()

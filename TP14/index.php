@@ -184,10 +184,20 @@ switch ($_GET['action'])
         //ds try catch
         break;
 
-    case 'adduser':
-        d\auth\Auth::register($_POST['email'], $_POST['password']);
-        $rend .= "<h4>Compte créé avec succès - vous pouvez vous connecter</h4>";
-            //Ds try catch
+    case 'display-playlist':
+        if (!isset($_GET["id"]))
+            $rend .= "Veuillez sélectionner une playlist";
+        else
+        {
+            try {
+                $pl = d\audio\lists\PlayList::find($_GET["id"]);
+                $alr = new d\render\AudioListRenderer($pl);
+                $rend .= $alr->render(d\render\Renderer::COMPACT);
+            }
+            catch ()
+
+        }
+        break;
     default:
         $rend = "Bienvenue !";
 }
@@ -201,7 +211,7 @@ switch ($_GET['action'])
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>TP11 - Deefy Forms</title>
+    <title>TP14 - Deefy Forms</title>
 </head>
 <body>
     <ul>
