@@ -15,7 +15,7 @@ use \iutnc\deefy\db\ConnectionFactory;
  */
 
 ConnectionFactory::setConfig('./config.ini');
-ConnectionFactory::makeConnection();
+//ConnectionFactory::makeConnection();
 
 if (!isset($_GET['action'])) $_GET['action'] = "";
 //$action = isset($_GET['action']) ? $_GET['action'] : null;
@@ -38,9 +38,18 @@ switch ($_GET['action'])
             $_POST['mail'] = filter_var($_POST['mail'], FILTER_SANITIZE_EMAIL);
             $_POST['pwd'] = filter_var($_POST['pwd'], FILTER_SANITIZE_SPECIAL_CHARS);
 
-            d\auth\Auth::register($_POST["mail"], $_POST["pwd"]);
-            $rend .= "<p><strong>" . $_POST['mail'] .
-                " a été enregistre dans la base.</strong></p>";
+            try {
+                d\auth\Auth::register($_POST["mail"], $_POST["pwd"]);
+
+                $rend .= "<p><strong>" . $_POST['mail'] .
+                    " a été enregistre dans la base.</strong></p>";
+            }
+            catch (d\exception\PasswordStrenghException | d\exception\AlreadyRegisteredException | d\exception\InvalidPropertyNameException $e)
+            {
+                $rend .= $e->getMessage();
+            }
+
+
         }
         break;
     case 'add-playlist' :
@@ -101,7 +110,7 @@ switch ($_GET['action'])
                     break;
                 }
 
-                // Vérifie la taille du fichier - 5Mo maximum
+                // Vérifie la taille du fichier
                 $maxsize = 20 * 1024 * 1024;
                 if ($pSize > $maxsize) {
                     $rend .= "Erreur: La taille du fichier est supérieure à la limite autorisée. $backLink";
@@ -110,7 +119,6 @@ switch ($_GET['action'])
 
                 $dir = "";
                 $pT = new d\audio\tracks\PodcastTrack($pNom, $dir);
-                // Vérifie le type MIME du fichier
                 if (in_array($pType, $allowed)) {
                     // Vérifie si le fichier existe avant de le télécharger.
                     if (file_exists("./audio/" . $_FILES["upload"]["name"]))

@@ -2,8 +2,10 @@
 
 namespace iutnc\deefy\auth;
 
+use iutnc\deefy\exception\AlreadyRegisteredException;
 use iutnc\deefy\exception\AuthException;
 use \iutnc\deefy\db\ConnectionFactory;
+use iutnc\deefy\exception\InvalidPropertyNameException;
 use iutnc\deefy\exception\PasswordStrenghException;
 use iutnc\deefy\user\User;
 
@@ -55,23 +57,39 @@ class Auth
         }
     }
 
-    public static function checkPasswordStrengh(string $pass, $num) : bool
+    public static function checkPasswordStrengh(string $pass, int $long) : bool
     {
-        return true;
+        return strlen($pass) >= $long;
     }
 
     /**
      * @throws PasswordStrenghException
+     * @throws AlreadyRegisteredException
+     * @throws InvalidPropertyNameException
      */
     public static function register(string $mail, string $pass)
     {
-        if (!self::checkPasswordStrengh($pass, 4))
+        if (!self::checkPasswordStrengh($pass, 10))
             throw new PasswordStrenghException();
 
-        $hash = password_hash($pass, PASSWORD_DEFAULT);
-        ConnectionFactory::makeConnection();
+        if (!filter_var($mail, FILTER_VALIDATE_EMAIL))
+            throw new InvalidPropertyNameException("Email invalide");
 
-        //$query_email = ;
+        $db = ConnectionFactory::makeConnection();
+        $q1 = "SELECT email FROM User WHERE email = ?";
+        $st = $db->prepare($q1);
+
+        $st->execute([$mail]);
+
+        if ($st->fetch(\PDO::FETCH_ASSOC) !== false) {
+            throw new AlreadyRegisteredException();
+        }
+
+        $hash = password_hash($pass, PASSWORD_DEFAULT);
+
+        $q2 = "INSERT INTO User (email, passwd, role) VALUES (?, ?, ?)";
+        $st2 = $db->prepare($q2);
+        $st2->execute([$mail, $hash, 1]);
 
     }
 
