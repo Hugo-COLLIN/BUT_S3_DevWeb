@@ -30,8 +30,8 @@ class Auth
         if (!password_verify($pwd, $user['passwd'])) throw new AuthException();
 
         //ou dans loadProfile
-        $user = new User($email, $user['passwd'], $user['role']);
-        $_SESSION['user'] = serialize($user);
+        //$user = new User($email, $user['passwd'], $user['role']);
+        //$_SESSION['user'] = serialize($user);
 /*
         if () {
             $user = $st->fetch(\PDO::FETCH_ASSOC);
@@ -48,11 +48,11 @@ class Auth
         $db = ConnectionFactory::makeConnection();
         $q = "SELECT * from user where email = ?";
         $st = $db->prepare($q);
-        //$res = $st->execute([$email]);
+        $res = $st->execute([$email]);
 
         $user = $st->fetch(\PDO::FETCH_ASSOC);
 
-        if ($st->execute([$email])) {
+        if ($res) {
                 return new User($user['email'], $user['passwd'], $user['role']);
         }
     }
