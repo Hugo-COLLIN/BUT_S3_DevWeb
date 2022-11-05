@@ -194,7 +194,10 @@ switch ($_GET['action'])
                 $alr = new d\render\AudioListRenderer($pl);
                 $rend .= $alr->render(d\render\Renderer::COMPACT);
             }
-            catch ()
+            catch (d\exception\EmptyRequestException $e)
+            {
+                $rend .= "La playlist n'existe pas.";
+            }
 
         }
         break;

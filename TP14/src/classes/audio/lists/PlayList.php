@@ -39,11 +39,10 @@ class PlayList extends AudioList
         $db = ConnectionFactory::makeConnection();
         $qPl = "SELECT nom FROM playlist WHERE id=?";
         $stPl = $db->prepare($qPl);
+        $stPl->execute([$idPl]);
 
-        if($stPl->execute([$idPl]))
+        if ($resPl = $stPl->fetch(\PDO::FETCH_ASSOC))
         {
-            $resPl = $stPl->fetch(\PDO::FETCH_ASSOC);
-
             $qTrack = "SELECT * FROM track, playlist2track
                         WHERE track.id = playlist2track.id_track
                         AND playlist2track.id_pl = ?";
