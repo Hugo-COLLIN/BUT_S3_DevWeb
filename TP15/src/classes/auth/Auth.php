@@ -13,9 +13,10 @@ use iutnc\deefy\user\User;
 class Auth
 {
     /**
+     * Method that compare credentials sent by user to data already in the base
      * @throws AuthException
      */
-    public static function authentificate(string $email, string $pwd)
+    public static function authentificate(string $email, string $pwd) : void
     {
         $db = ConnectionFactory::makeConnection();
         $q = "SELECT * FROM USER WHERE email=?";
@@ -33,37 +34,38 @@ class Auth
         //ou dans loadProfile
         $user = new User($email, $user['passwd'], $user['role']);
         $_SESSION['user'] = serialize($user);
-/*
-        if () {
-            $user = $st->fetch(\PDO::FETCH_ASSOC);
-            if ($user && password_verify($pwd, $user['passwd'])) {
-                return new User($user['email'], $user['passwd'], $user['role']);
-            }
-            else throw new AuthException("Authentification failed : invalid credentials");
-        }*/
-        //return null;
     }
 
+    /**
+     * Method that return a User object created from database information about the user
+     * @param string $email user email
+     * @return User|void User objec
+     */
     public static function loadProfile(string $email)
     {
         $db = ConnectionFactory::makeConnection();
-        $q = "SELECT * from user where email = ?";
+        $q = "SELECT * FROM User where email = ?";
         $st = $db->prepare($q);
         $res = $st->execute([$email]);
 
         $user = $st->fetch(\PDO::FETCH_ASSOC);
 
-        if ($res) {
-                return new User($user['email'], $user['passwd'], $user['role']);
-        }
+        if ($res) return new User($user['email'], $user['passwd'], $user['role']);
     }
 
+    /**
+     * Check the strengh of the password sent
+     * @param string $pass
+     * @param int $long
+     * @return bool
+     */
     public static function checkPasswordStrengh(string $pass, int $long) : bool
     {
         return strlen($pass) >= $long;
     }
 
     /**
+     * Method that register a new user in the database if he doesn't exist
      * @throws PasswordStrenghException
      * @throws AlreadyRegisteredException
      * @throws InvalidPropertyNameException
@@ -96,6 +98,7 @@ class Auth
 
 
     /**
+     * Check that user is authorized to access a playlist
      * @throws EmptyRequestException
      */
     public static function checkAccessLevel (string $userSer, int $plId)
