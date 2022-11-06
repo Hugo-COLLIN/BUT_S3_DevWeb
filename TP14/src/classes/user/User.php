@@ -56,4 +56,10 @@ class User
             echo $row['id'] . "<br>";
         }
     }
+
+    public function __get($prop) : mixed
+    {
+        if (!property_exists($this, $prop)) throw new e\InvalidPropertyNameException();
+        return $this->$prop;
+    }
 }

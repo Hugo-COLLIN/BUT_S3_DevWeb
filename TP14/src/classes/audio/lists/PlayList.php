@@ -56,7 +56,7 @@ class PlayList extends AudioList
             $db = null;
             return new PlayList($resPl["nom"], $tabTr);
         }
-        else throw new d\exception\EmptyRequestException();
+        else throw new d\exception\EmptyRequestException("La playlist n'existe pas.");
     }
 /*
     public function getTrackList ()

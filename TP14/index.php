@@ -165,6 +165,7 @@ switch ($_GET['action'])
             try {
                 d\auth\Auth::authentificate($mail, $pwd);
                 $user = d\auth\Auth::loadProfile($_POST['email']);
+                $_SESSION["user"] = serialize($user);
                 //$authuser = unserialize($_SESSION['user']);
                 $rend .= "<p>Successfully connected !</p><ul>";
 
@@ -191,12 +192,13 @@ switch ($_GET['action'])
         {
             try {
                 $pl = d\audio\lists\PlayList::find($_GET["id"]);
+                d\auth\Auth::checkAccessLevel($_SESSION["user"], $_GET["id"]);
                 $alr = new d\render\AudioListRenderer($pl);
                 $rend .= $alr->render(d\render\Renderer::COMPACT);
             }
             catch (d\exception\EmptyRequestException $e)
             {
-                $rend .= "La playlist n'existe pas.";
+                $rend .= $e->getMessage();
             }
 
         }

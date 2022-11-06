@@ -5,6 +5,7 @@ namespace iutnc\deefy\auth;
 use iutnc\deefy\exception\AlreadyRegisteredException;
 use iutnc\deefy\exception\AuthException;
 use \iutnc\deefy\db\ConnectionFactory;
+use iutnc\deefy\exception\EmptyRequestException;
 use iutnc\deefy\exception\InvalidPropertyNameException;
 use iutnc\deefy\exception\PasswordStrenghException;
 use iutnc\deefy\user\User;
@@ -30,8 +31,8 @@ class Auth
         if (!password_verify($pwd, $user['passwd'])) throw new AuthException();
 
         //ou dans loadProfile
-        //$user = new User($email, $user['passwd'], $user['role']);
-        //$_SESSION['user'] = serialize($user);
+        $user = new User($email, $user['passwd'], $user['role']);
+        $_SESSION['user'] = serialize($user);
 /*
         if () {
             $user = $st->fetch(\PDO::FETCH_ASSOC);
@@ -81,7 +82,7 @@ class Auth
 
         $st->execute([$mail]);
 
-        if ($st->fetch(\PDO::FETCH_ASSOC) !== false) {
+        if ($st->fetch(\PDO::FETCH_ASSOC) !== false) { //<!>
             throw new AlreadyRegisteredException();
         }
 
@@ -94,20 +95,27 @@ class Auth
     }
 
 
-/*
-    public static function checkaccesslevel ()
+    /**
+     * @throws EmptyRequestException
+     */
+    public static function checkAccessLevel (string $userSer, int $plId)
     {
+        $user = unserialize($userSer);
         if ($user->role === User::ADMIN_USER) return;
 
-        $q;
-        makeco;
+        $q = "SELECT email, role FROM user, user2playlist, playlist
+                WHERE user.id = user2playlist.id_user
+                AND user2playlist.id_pl = playlist.id
+                AND user.email = ?
+                AND playlist.id = ?";
 
-        execute (user->email, $plId);
-        if (!res) throw
+        $db = ConnectionFactory::makeConnection();
+        $st = $db->prepare($q);
 
-        $st = $user->fetch
-            ;
-        if (!res) throw
+        $st->execute([$user->email, $plId]);
+        $res = $st->fetch(\PDO::FETCH_ASSOC);
+
+        if (!$res) throw new EmptyRequestException("Accès refusé à la playlist");
     }
-*/
+
 }
