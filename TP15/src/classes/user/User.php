@@ -1,17 +1,31 @@
 <?php
 namespace iutnc\deefy\user;
 
+use iutnc\deefy\audio\lists\PlayList;
 use iutnc\deefy\exception AS e;
 use iutnc\deefy\db\ConnectionFactory;
 use \PDO as PDO;
 
 class User
 {
-    const STANDARD_USER = 1;
-    const ADMIN_USER = 100;
+    /**
+     * Constants variables : refers to users roles
+     */
+    const   STANDARD_USER = 1,
+            ADMIN_USER = 100;
 
+    /**
+     * User specific data
+     * @var string
+     */
     private string $email, $password, $role;
 
+    /**
+     * Constructor
+     * @param string $e
+     * @param string $p
+     * @param string $r
+     */
     public function __construct(string $e, string $p, string $r)
     {
         $this->email = $e;
@@ -19,13 +33,36 @@ class User
         $this->role = $r;
     }
 
+    /**
+     * Magic setter
+     * @param string $at
+     * @param mixed $val
+     * @return void
+     * @throws e\NotEditablePropertyException
+     */
     public function __set(string $at, mixed $val) : void
     {
         if (!property_exists($this, $at))
-            $this->at = $val;
+            $this->$at = $val;
         else throw new e\NotEditablePropertyException("$at : invalid prop");
     }
 
+    /**
+     * Magic getter
+     * @param $prop
+     * @return mixed
+     * @throws e\InvalidPropertyNameException
+     */
+    public function __get($prop) : mixed
+    {
+        if (!property_exists($this, $prop)) throw new e\InvalidPropertyNameException();
+        return $this->$prop;
+    }
+
+    /**
+     * Get all the playlists for a certain user
+     * @return array PlayList object's list
+     */
     public function getPlaylist() : array
     {
         $db = ConnectionFactory::makeConnection();
@@ -38,28 +75,10 @@ class User
         $st->execute();
         $userPlaylists = [];
         foreach ($st->fetchAll(PDO::FETCH_ASSOC) as $row) {
-            //print_r($row); echo '<br>';
-            $playlist = new \iutnc\deefy\audio\lists\PlayList($row['nom']);
+            $playlist = new PlayList($row['nom']);
             $playlist->id = $row['id'];
-            array_push($userPlaylists, $playlist);
+            $userPlaylists[] = $playlist;
         }
         return $userPlaylists;
-    }
-
-    public function testQuery ()
-    {
-        $db = ConnectionFactory::makeConnection();
-        $st = $db->prepare("SELECT * FROM playlist");
-        $st->execute();
-
-        foreach ($st->fetchAll(PDO::FETCH_NUM) as $row) {
-            echo $row['id'] . "<br>";
-        }
-    }
-
-    public function __get($prop) : mixed
-    {
-        if (!property_exists($this, $prop)) throw new e\InvalidPropertyNameException();
-        return $this->$prop;
     }
 }
