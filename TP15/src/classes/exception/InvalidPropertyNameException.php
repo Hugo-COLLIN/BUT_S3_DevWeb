@@ -5,12 +5,20 @@ namespace iutnc\deefy\exception;
 
 use Exception;
 
+/**
+ * Exception thrown when a property name is incorrect
+ * @author Hugo COLLIN
+ */
 class InvalidPropertyNameException extends Exception
 {
-    public function __construct($message = "", int $code = 0, Exception $previous = null)
+    /**
+     * Exception inherited constructor
+     * @param $message
+     * @param int $code
+     * @param Exception|null $previous
+     */
+    public function __construct($message = "Nom de la propriété invalide.", int $code = 0, Exception $previous = null)
     {
-        if (empty($message))
-            $message = "Nom de la propriété invalide.";
         parent::__construct($message, $code, $previous);
     }
 }
