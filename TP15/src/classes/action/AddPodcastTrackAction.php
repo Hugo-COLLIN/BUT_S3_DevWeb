@@ -2,7 +2,9 @@
 
 namespace iutnc\deefy\action;
 
-class AddPodcastTrack extends Action
+use iutnc\deefy AS d;
+
+class AddPodcastTrackAction extends Action
 {
 
     public function execute(): string

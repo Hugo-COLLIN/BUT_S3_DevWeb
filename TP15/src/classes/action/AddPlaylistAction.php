@@ -2,7 +2,9 @@
 
 namespace iutnc\deefy\action;
 
-class AddPlaylist extends Action
+use iutnc\deefy AS d;
+
+class AddPlaylistAction extends Action
 {
 
     public function execute(): string

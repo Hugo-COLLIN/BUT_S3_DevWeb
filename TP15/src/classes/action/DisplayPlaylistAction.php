@@ -2,6 +2,8 @@
 
 namespace iutnc\deefy\action;
 
+use iutnc\deefy AS d;
+
 class DisplayPlaylistAction extends Action
 {
 
