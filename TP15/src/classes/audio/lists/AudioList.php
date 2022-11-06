@@ -1,7 +1,7 @@
 <?php
 namespace iutnc\deefy\audio\lists;
 
-use iutnc\deefy\audio\exception\InvalidPropertyNameException;
+use iutnc\deefy\exception\InvalidPropertyNameException;
 
 class AudioList
 {
@@ -19,6 +19,9 @@ class AudioList
             $this->dureeTot += $track->duree;
     }
 
+    /**
+     * @throws InvalidPropertyNameException
+     */
     public function __get(string $name) : mixed
     {
         if (!property_exists($this, $name))

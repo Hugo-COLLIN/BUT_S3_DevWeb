@@ -2,8 +2,8 @@
 namespace iutnc\deefy\audio\lists;
 //namespace VENDOR\PROJECT\Module-Sous-partie
 
-use iutnc\deefy\audio\exception\InvalidPropertyNameException;
-use iutnc\deefy\audio\exception\NotEditablePropertyException;
+use iutnc\deefy\exception\InvalidPropertyNameException;
+use iutnc\deefy\exception\NotEditablePropertyException;
 
 class AlbumList extends AudioList
 {
@@ -16,6 +16,10 @@ class AlbumList extends AudioList
     }
 
 
+    /**
+     * @throws InvalidPropertyNameException
+     * @throws NotEditablePropertyException
+     */
     public function __set(string $name, mixed $value) : void
     {
         if (!property_exists($this, $name))

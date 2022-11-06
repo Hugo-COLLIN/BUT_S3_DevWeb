@@ -1,9 +1,9 @@
 <?php
 namespace iutnc\deefy\audio\tracks;
 
-use iutnc\deefy\audio\exception\InvalidPropertyNameException;
-use iutnc\deefy\audio\exception\InvalidPropertyValueException;
-use iutnc\deefy\audio\exception\NotEditablePropertyException;
+use iutnc\deefy\exception\InvalidPropertyNameException;
+use iutnc\deefy\exception\InvalidPropertyValueException;
+use iutnc\deefy\exception\NotEditablePropertyException;
 
 class AudioTrack
 {
@@ -40,8 +40,6 @@ class AudioTrack
      */
     public function __set(string $att, $value): void
     {
-        //if (property_exists($this, $att)) $this->$att = $value;
-        //else throw new Exception("$att : Invalid property");
         if (!property_exists($this, $att))
             throw new InvalidPropertyNameException(get_called_class() . " : invalid property $att");
 
@@ -53,9 +51,10 @@ class AudioTrack
 
         $this->$att = $value;
     }
-
+/*
     public function insertTrack (array $track)
     {
 
     }
+*/
 }
