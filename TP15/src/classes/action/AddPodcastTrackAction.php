@@ -23,7 +23,6 @@ class AddPodcastTrackAction extends Action
         else
         {
             $backLink =  "<br><a href='?action=add-podcasttrack'>&larr; Retour</a>";
-            //if (is_uploaded_file($_FILES['upload']['tmp_name']) && $_FILES['upload']['type'] === "audio/mp4")
             if (isset($_FILES["upload"]) && $_FILES["upload"]["error"] == 0) {
                 $allowed = array("mp3" => "audio/mp3", "mpeg" => "audio/mpeg");
                 $pFilename = filter_var($_FILES["upload"]["name"], FILTER_SANITIZE_SPECIAL_CHARS);
@@ -34,14 +33,14 @@ class AddPodcastTrackAction extends Action
                 // Vérifie l'extension du fichier
                 $ext = pathinfo($pFilename, PATHINFO_EXTENSION);
                 if (!array_key_exists($ext, $allowed)) {
-                    $rend .= "Erreur : Veuillez sélectionner un format de fichier valide. $backLink";
+                    $rend .= "Veuillez sélectionner un format de fichier valide. $backLink";
                     return $rend;
                 }
 
                 // Vérifie la taille du fichier
                 $maxsize = 20 * 1024 * 1024;
                 if ($pSize > $maxsize) {
-                    $rend .= "Erreur: La taille du fichier est supérieure à la limite autorisée. $backLink";
+                    $rend .= "La taille du fichier est supérieure à la limite autorisée. $backLink";
                     return $rend;
                 }
 
@@ -65,7 +64,7 @@ class AddPodcastTrackAction extends Action
                     $rend .= $ptr->render(d\render\Renderer::COMPACT);
                 }
                 else
-                    $rend .= "Erreur: Il y a eu un problème de téléchargement de votre fichier. Veuillez réessayer. $backLink";
+                    $rend .= "Problème de téléchargement du fichier, veuillez réessayer. $backLink";
             }
             else if (isset($_POST["podname"]))
                 $rend .= "Veuillez uploader un fichier $backLink";
