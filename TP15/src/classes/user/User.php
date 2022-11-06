@@ -6,6 +6,9 @@ use iutnc\deefy\exception AS e;
 use iutnc\deefy\db\ConnectionFactory;
 use \PDO as PDO;
 
+/**
+ * Class that create a User object
+ */
 class User
 {
     /**
