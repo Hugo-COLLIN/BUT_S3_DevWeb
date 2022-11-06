@@ -24,14 +24,23 @@ $dispatcher = new d\dispatch\Dispatcher();
     <title>TP15 - Hugo COLLIN's Deefy App</title>
 </head>
 <body>
-    <ul>
-        <li><a href="./">Accueil</a></li>
-        <li><a href="./?action=signin">Connexion</a></li>
-        <li><a href="./?action=add-user">Inscription</a></li>
-        <li><a href="./?action=display-playlist">Afficher une playlist</a></li>
-        <li><a href="./?action=add-playlist">Ajouter une playlist</a></li>
-        <li><a href="./?action=add-podcasttrack">Ajouter un podcast</a></li>
-    </ul>
-    <?php $dispatcher->run(); ?>
+    <header>
+        <h1>Hugo COLLIN - S3A</h1>
+        <h4>06/11/2022 - IUT Nancy-Charlemagne</h4>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="./">Accueil</a></li>
+            <li><a href="./?action=signin">Connexion</a></li>
+            <li><a href="./?action=add-user">Inscription</a></li>
+            <li><a href="./?action=display-playlist">Afficher une playlist</a></li>
+            <li><a href="./?action=add-playlist">Ajouter une playlist</a></li>
+            <li><a href="./?action=add-podcasttrack">Ajouter un podcast</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <?php $dispatcher->run(); ?>
+    </main>
 </body>
 </html>
