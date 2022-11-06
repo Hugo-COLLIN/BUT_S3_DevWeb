@@ -12,6 +12,7 @@ use iutnc\deefy\user\User;
 
 /**
  * Class that manage users' connections
+ * @author Hugo COLLIN
  */
 class Auth
 {

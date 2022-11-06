@@ -6,6 +6,7 @@ use iutnc\deefy AS d;
 
 /**
  * Class that create the add-user view
+ * @author Hugo COLLIN
  */
 class AddUserAction extends Action
 {

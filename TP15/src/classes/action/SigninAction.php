@@ -7,6 +7,7 @@ use iutnc\deefy\exception\AuthException;
 
 /**
  * Class that create the signin view
+ * @author Hugo COLLIN
  */
 class SigninAction extends Action
 {

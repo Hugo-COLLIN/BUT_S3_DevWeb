@@ -6,6 +6,7 @@ use \PDO as PDO;
 
 /**
  * The class' goal is to set up a connection between the app and the database
+ * @author Hugo COLLIN
  */
 class ConnectionFactory
 {

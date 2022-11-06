@@ -6,6 +6,7 @@ use iutnc\deefy AS d;
 
 /**
  * Class that create the display-playlist view
+ * @author Hugo COLLIN
  */
 class DisplayPlaylistAction extends Action
 {

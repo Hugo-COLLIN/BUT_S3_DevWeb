@@ -8,6 +8,7 @@ use \PDO as PDO;
 
 /**
  * Class that create a User object
+ * @author Hugo COLLIN
  */
 class User
 {

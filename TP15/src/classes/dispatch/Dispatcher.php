@@ -6,6 +6,7 @@ use iutnc\deefy\action AS AC;
 
 /**
  * Class that select action to execute depending on user activity on the website, and rend it
+ * @author Hugo COLLIN
  */
 class Dispatcher
 {
