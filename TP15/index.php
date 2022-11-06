@@ -153,7 +153,7 @@ switch ($_GET['action'])
                 <h3>Connexion</h3>
                 <form method='post' action='?action=signin' enctype="multipart/form-data">
                     Email : <input type="email" name="email">
-                    Password : <input type='text' name='password'>
+                    Password : <input type='password' name='password'>
                     <input type='submit' value='Valider'>
                 </form>
             END;
@@ -182,7 +182,6 @@ switch ($_GET['action'])
             }
 
         }
-        //ds try catch
         break;
 
     case 'display-playlist':
