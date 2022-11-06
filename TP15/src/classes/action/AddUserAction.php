@@ -4,12 +4,19 @@ namespace iutnc\deefy\action;
 
 use iutnc\deefy AS d;
 
+/**
+ * Class that create the add-user view
+ */
 class AddUserAction extends Action
 {
 
+    /**
+     * Method that create the view
+     * @return string main view
+     */
     public function execute(): string
     {
-        $rend = "";
+        $rend = "<h3>Inscription</h3>";
         if ($_SERVER['REQUEST_METHOD'] == "GET")
             $rend .= "
             <form method='post' action='?action=add-user'>

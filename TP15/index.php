@@ -28,6 +28,7 @@ $dispatcher = new d\dispatch\Dispatcher();
         <h1>Hugo COLLIN - S3A</h1>
         <h4>06/11/2022 - IUT Nancy-Charlemagne</h4>
     </header>
+
     <nav>
         <ul>
             <li><a href="./">Accueil</a></li>

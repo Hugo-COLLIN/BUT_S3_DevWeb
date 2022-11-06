@@ -4,12 +4,19 @@ namespace iutnc\deefy\action;
 
 use iutnc\deefy AS d;
 
+/**
+ * Class that create the add-podcasttrack view
+ */
 class AddPodcastTrackAction extends Action
 {
 
+    /**
+     * Method that create the view
+     * @return string main view
+     */
     public function execute(): string
     {
-        $rend = "";
+        $rend = "<h3>Ajouter une piste</h3>";
         if (!isset($_SESSION["playlist"]))
             $rend .= "Créez d'abord une playlist";
         else if ($_SERVER['REQUEST_METHOD'] == "GET")

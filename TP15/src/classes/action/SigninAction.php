@@ -3,17 +3,24 @@
 namespace iutnc\deefy\action;
 
 use iutnc\deefy AS d;
+use iutnc\deefy\exception\AuthException;
 
+/**
+ * Class that create the signin view
+ */
 class SigninAction extends Action
 {
 
+    /**
+     * Method that create the view
+     * @return string main view
+     */
     public function execute(): string
     {
-        $rend = "";
+        $rend = "<h3>Connexion</h3>";
         if ($_SERVER['REQUEST_METHOD'] == "GET")
         {
             $rend .= <<<END
-                <h3>Connexion</h3>
                 <form method='post' action='?action=signin' enctype="multipart/form-data">
                     Email : <input type="email" name="email">
                     Password : <input type='password' name='password'>
@@ -39,7 +46,7 @@ class SigninAction extends Action
                 }
                 $rend .= "</ul>";
             }
-            catch (Exception $e)
+            catch (AuthException | d\exception\InvalidPropertyValueException $e)
             {
                 $rend .= "<b>Informations d'identification invalides</b>";
             }

@@ -4,15 +4,28 @@ namespace iutnc\deefy\dispatch;
 
 use iutnc\deefy\action AS AC;
 
+/**
+ * Class that select action to execute depending on user activity on the website, and rend it
+ */
 class Dispatcher
 {
+    /**
+     * @var string|mixed|null action performed by the user
+     */
     protected ?string $action = null;
 
+    /**
+     * Constructor that set action attribute
+     */
     public function __construct()
     {
         $this->action = $_GET['action'] ?? null;
     }
 
+    /**
+     * Method that select action to execute depending on user activity on the website
+     * @return void
+     */
     public function run() : void
     {
         $act = null;
@@ -39,6 +52,11 @@ class Dispatcher
         $this->renderPage($html);
     }
 
+    /**
+     * Method that return string corresponding to the main content to show to user
+     * @param string $html
+     * @return void
+     */
     private function renderPage(string $html) : void {
         echo $html;
     }

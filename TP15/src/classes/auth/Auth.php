@@ -10,6 +10,9 @@ use iutnc\deefy\exception\InvalidPropertyNameException;
 use iutnc\deefy\exception\PasswordStrenghException;
 use iutnc\deefy\user\User;
 
+/**
+ * Class that manage users' connections
+ */
 class Auth
 {
     /**

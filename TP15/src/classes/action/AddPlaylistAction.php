@@ -4,12 +4,19 @@ namespace iutnc\deefy\action;
 
 use iutnc\deefy AS d;
 
+/**
+ * Class that create the add-playlist view
+ */
 class AddPlaylistAction extends Action
 {
 
+    /**
+     * Method that create the view
+     * @return string main view
+     */
     public function execute(): string
     {
-        $rend = "";
+        $rend = "<h3>Créer une playlist</h3>";
         if ($_SERVER['REQUEST_METHOD'] == "GET")
         {
             $rend .= <<<END

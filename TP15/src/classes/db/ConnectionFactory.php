@@ -4,17 +4,37 @@ namespace iutnc\deefy\db;
 
 use \PDO as PDO;
 
+/**
+ * The class' goal is to set up a connection between the app and the database
+ */
 class ConnectionFactory
 {
-    public static PDO|null $db = null;
+    /**
+     *
+     * @var PDO|null PHP Data Object
+     */
+    public static ?PDO $db = null;
+
+    /**
+     * @var array Configuration information extracted from external file
+     */
     public static array $config = [];
 
 
+    /**
+     * Extract information from an external file
+     * @param string $file file path
+     * @return void
+     */
     public static function setConfig(string $file): void
     {
         self::$config = parse_ini_file($file);
     }
 
+    /**
+     * Method that creates a new connection to the database
+     * @return PDO PHP Data Object
+     */
     public static function makeConnection() : PDO
     {
         if (self::$db == null) {
