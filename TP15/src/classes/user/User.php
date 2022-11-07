@@ -30,9 +30,9 @@ class User
 
     /**
      * Constructor
-     * @param string $e
-     * @param string $p
-     * @param string $r
+     * @param string $e email
+     * @param string $p password
+     * @param string $r role
      */
     public function __construct(string $e, string $p, string $r)
     {
