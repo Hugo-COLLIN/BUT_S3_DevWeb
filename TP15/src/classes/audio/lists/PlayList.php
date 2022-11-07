@@ -5,6 +5,7 @@ use iutnc\deefy as d;
 use iutnc\deefy\audio\tracks\AudioTrack;
 use iutnc\deefy\db\ConnectionFactory;
 use iutnc\deefy\exception\EmptyRequestException;
+use iutnc\deefy\exception\InvalidPropertyNameException;
 
 class PlayList extends AudioList
 {
@@ -57,6 +58,16 @@ class PlayList extends AudioList
             return new PlayList($resPl["nom"], $tabTr);
         }
         else throw new d\exception\EmptyRequestException("La playlist n'existe pas.");
+    }
+
+    /**
+     * @throws InvalidPropertyNameException
+     */
+    public function __get(string $name) : mixed
+    {
+        if (!property_exists($this, $name))
+            throw new InvalidPropertyNameException();
+        return $this->$name;
     }
 /*
     public function getTrackList ()
