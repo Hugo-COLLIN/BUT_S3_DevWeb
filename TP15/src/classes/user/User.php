@@ -4,6 +4,10 @@ namespace iutnc\deefy\user;
 use iutnc\deefy\audio\lists\PlayList;
 use iutnc\deefy\exception AS e;
 use iutnc\deefy\db\ConnectionFactory;
+use iutnc\deefy\exception\AlreadyStoredException;
+use iutnc\deefy\exception\AuthException;
+use iutnc\deefy\exception\EmptyRequestException;
+use iutnc\deefy\exception\InvalidPropertyNameException;
 use \PDO as PDO;
 
 /**
@@ -84,5 +88,49 @@ class User
             $userPlaylists[] = $playlist;
         }
         return $userPlaylists;
+    }
+
+    /**
+     * @param PlayList $pl
+     * @throws AuthException
+     * @throws InvalidPropertyNameException
+     * @throws AlreadyStoredException
+     * @throws EmptyRequestException
+     */
+    public function addPlaylist(PlayList $pl): void
+    {
+        $db = ConnectionFactory::makeConnection();
+        $nomPl = $pl->__get("nom");
+
+        $q1 = "SELECT id FROM user WHERE email = ?";
+        $st1 = $db->prepare($q1);
+        $st1->bindParam(1, $this->email);
+        $st1->execute();
+        if (!($q1res = $st1->fetch(\PDO::FETCH_ASSOC))) throw new e\AuthException();
+        $usrid = $q1res['id'];
+
+        $q2 = "SELECT nom FROM playlist WHERE nom = ?";
+        $st2 = $db->prepare($q2);
+        $st2->bindParam(1, $nomPl);
+        $st2->execute();
+        if ($st2->fetch(\PDO::FETCH_ASSOC)) throw new e\AlreadyStoredException();
+
+        $q3 = "INSERT INTO playlist (nom) VALUES (?)";
+        $st3 = $db->prepare($q3);
+        $st3->bindParam(1, $nomPl);
+        $st3->execute();
+
+        $q4 = "SELECT id FROM playlist WHERE nom = ?";
+        $st4 = $db->prepare($q4);
+        $st4->bindParam(1, $nomPl);
+        $st4->execute();
+        if (!($q4res = $st4->fetch(\PDO::FETCH_ASSOC))) throw new e\EmptyRequestException();
+        $plid = $q4res['id'];
+
+        $q5 = "INSERT INTO user2playlist (id_user, id_pl) VALUES (?, ?);";
+        $st5 = $db->prepare($q5);
+        $st5->bindParam(1, $usrid);
+        $st5->bindParam(2, $plid);
+        $st5->execute();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace iutnc\deefy\auth;
 
-use iutnc\deefy\exception\AlreadyRegisteredException;
+use iutnc\deefy\exception\AlreadyStoredException;
 use iutnc\deefy\exception\AuthException;
 use \iutnc\deefy\db\ConnectionFactory;
 use iutnc\deefy\exception\EmptyRequestException;
@@ -71,7 +71,7 @@ class Auth
     /**
      * Method that register a new user in the database if he doesn't exist
      * @throws PasswordStrenghException
-     * @throws AlreadyRegisteredException
+     * @throws AlreadyStoredException
      * @throws InvalidPropertyNameException
      */
     public static function register(string $mail, string $pass)
@@ -89,7 +89,7 @@ class Auth
         $st->execute([$mail]);
 
         if ($st->fetch(\PDO::FETCH_ASSOC) !== false) { //<!>
-            throw new AlreadyRegisteredException();
+            throw new AlreadyStoredException("Utilisateur déjà dans la base.");
         }
 
         $hash = password_hash($pass, PASSWORD_DEFAULT);

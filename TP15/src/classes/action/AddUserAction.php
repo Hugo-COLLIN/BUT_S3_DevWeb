@@ -36,7 +36,7 @@ class AddUserAction extends Action
                 $rend .= "<p><strong>" . $_POST['mail'] .
                     " a été enregistre dans la base.</strong></p>";
             }
-            catch (d\exception\PasswordStrenghException | d\exception\AlreadyRegisteredException | d\exception\InvalidPropertyNameException $e)
+            catch (d\exception\PasswordStrenghException | d\exception\AlreadyStoredException | d\exception\InvalidPropertyNameException $e)
             {
                 $rend .= $e->getMessage();
             }

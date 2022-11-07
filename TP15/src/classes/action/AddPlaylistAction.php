@@ -3,6 +3,10 @@
 namespace iutnc\deefy\action;
 
 use iutnc\deefy AS d;
+use iutnc\deefy\exception\AlreadyStoredException;
+use iutnc\deefy\exception\AuthException;
+use iutnc\deefy\exception\EmptyRequestException;
+use iutnc\deefy\exception\InvalidPropertyNameException;
 
 /**
  * Class that create the add-playlist view
@@ -18,7 +22,9 @@ class AddPlaylistAction extends Action
     public function execute(): string
     {
         $rend = "<h3>Créer une playlist</h3>";
-        if ($_SERVER['REQUEST_METHOD'] == "GET")
+        if (!isset($_SESSION["user"]))
+            $rend .= "Veuillez vous connecter";
+        else if ($_SERVER['REQUEST_METHOD'] == "GET")
         {
             $rend .= <<<END
                 <form method='post' action='?action=add-playlist'>
@@ -33,6 +39,16 @@ class AddPlaylistAction extends Action
             $pl = new d\audio\lists\PlayList($nom);
             //$sessnom = "pl_$nom";
             $_SESSION["playlist"] = serialize($pl);
+
+            try {
+                $user = unserialize($_SESSION["user"]);
+                $user->addPlaylist($pl);
+            }
+            catch (AuthException | InvalidPropertyNameException | AlreadyStoredException | EmptyRequestException $e)
+            {
+                $rend .= $e->getMessage();
+            }
+
             $alr = new d\render\AudioListRenderer($pl);
 
             try {
